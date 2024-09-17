@@ -11,6 +11,12 @@ public class PlayerMovement : MonoBehaviour
     public float jumpVelocity = 20;
     public bool isGrounded = false;
 
+    public bool isHoldingJump = false;
+    public float maxHoldJumpTime = 0.4f;
+    public float holdJumpTimer = 0.0f;
+
+    public float jumpGroundThreshold = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +26,23 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isGrounded)
+        Vector2 pos = transform.position;
+        float groundDistance = Mathf.Abs(pos.y - groundHeight);
+
+        if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isGrounded = false;
                 velocity.y = jumpVelocity;
+                isHoldingJump = true;
+                holdJumpTimer = 0;
             }
+        }
+
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            isHoldingJump = false;
         }
     }
     // Increment the player's position every frame and also adjust the difference between frames
@@ -36,8 +52,22 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isGrounded)
         {
+            if(isHoldingJump)
+            {
+                holdJumpTimer += Time.fixedDeltaTime;
+                if(holdJumpTimer >= maxHoldJumpTime)
+                {
+                    isHoldingJump = false;
+                }
+            }
+
+
             pos.y += velocity.y * Time.fixedDeltaTime;
-            velocity.y += gravity * Time.fixedDeltaTime;
+            if (!isHoldingJump)
+            {
+                velocity.y += gravity * Time.fixedDeltaTime;
+            }
+            
 
             if (pos.y <= groundHeight)
             {
