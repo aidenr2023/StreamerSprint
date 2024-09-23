@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpGroundThreshold = 1;
 
+    public bool isDead = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,16 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 pos = transform.position;
 
+        if (isDead)
+        {
+            return;
+        }
+
+        if (pos.y < -20)
+        {
+            isDead = true;
+        }
+
         if (!isGrounded)
         {
             if(isHoldingJump)
@@ -82,13 +94,29 @@ public class PlayerMovement : MonoBehaviour
                 Ground ground = hit2D.collider.GetComponent<Ground>();
                 if (ground != null) 
                 {
+                    if (pos.y >= ground.groundHeight){
                     groundHeight = ground.groundHeight;
                     pos.y = groundHeight;
                     isGrounded = true;
+                    }
                 }
 
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
+
+            Vector2 wallOrigin = new Vector2(pos.x, pos.y);
+            RaycastHit2D wallHit = Physics2D.Raycast(wallOrigin, Vector2.right, velocity.x * Time.fixedDeltaTime);
+            if (wallHit.collider != null)
+            {
+                Ground ground = wallHit.collider.GetComponent<Ground>();
+                if (ground != null)
+                {
+                    if (pos.y < ground.groundHeight)
+                    {
+                        velocity.x = 0;
+                    }
+                }
+            }
         }
 
         distance += velocity.x * Time.fixedDeltaTime;
