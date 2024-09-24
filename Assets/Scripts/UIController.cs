@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour
         {
             results.SetActive(true);
 
-            Invoke("RestartScene", 0.1f); //For the purpose of the prototype, remove later
+            Invoke("RestartScene", 3f); //For the purpose of the prototype, remove later
         }
     }
 

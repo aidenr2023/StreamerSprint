@@ -68,7 +68,7 @@ public class Ground : MonoBehaviour
         float t = player.jumpVelocity / -player.gravity;
         float h2 = player.jumpVelocity * t + (0.5f * (player.gravity * (t * t)));
         float maxJumpHeight = h1 + h2;
-        float maxY = maxJumpHeight * 0.5f;
+        float maxY = maxJumpHeight * 0.3f;
         maxY += groundHeight;
         float minY = 1;
         float actualY = Random.Range(minY, maxY);
@@ -81,7 +81,7 @@ public class Ground : MonoBehaviour
         float t2 = Mathf.Sqrt((2.0f * (maxY - actualY)) / -player.gravity);
         float totalTime = t1 + t2;
         float maxX = totalTime * player.velocity.x;
-        maxX *= 0.7f;
+        maxX *= 0.4f;
         maxX += groundRight;
         float minX = screenRight + 5;
         float actualX = Random.Range(minX, maxX);
