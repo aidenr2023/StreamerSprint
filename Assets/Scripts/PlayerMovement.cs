@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 
@@ -23,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpGroundThreshold = 1;
 
     public bool isDead = false;
+
+    public TextMeshProUGUI trickText;
 
     public LayerMask groundLayerMask;
     public LayerMask obstacleLayerMask;
@@ -51,7 +55,51 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if(Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            trickText.gameObject.SetActive(true);
+            trickText.text = "Left Trick";
+        }
+
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            trickText.gameObject.SetActive(true);
+            trickText.text = "Right Trick";
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            trickText.gameObject.SetActive(true);
+            trickText.text = "Up Trick";
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            trickText.gameObject.SetActive(true);
+            trickText.text = "Down Trick";
+        }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             isHoldingJump = false;
         }
