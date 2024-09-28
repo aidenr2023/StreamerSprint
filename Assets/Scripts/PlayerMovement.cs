@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     public LayerMask groundLayerMask;
     public LayerMask obstacleLayerMask;
+    public Animator anim;
 
 
     // Start is called before the first frame update
@@ -59,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         {
             trickText.gameObject.SetActive(true);
             trickText.text = "Left Trick";
+            anim.SetTrigger("Trick");
         }
 
         if (Input.GetKeyUp(KeyCode.D))
@@ -70,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         {
             trickText.gameObject.SetActive(true);
             trickText.text = "Right Trick";
+            anim.SetTrigger("Trick");
         }
 
         if (Input.GetKeyUp(KeyCode.A))
@@ -81,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         {
             trickText.gameObject.SetActive(true);
             trickText.text = "Up Trick";
+            anim.SetTrigger("Trick");
         }
 
         if (Input.GetKeyUp(KeyCode.W))
@@ -92,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         {
             trickText.gameObject.SetActive(true);
             trickText.text = "Down Trick";
+            anim.SetTrigger("Trick");
         }
 
         if (Input.GetKeyUp(KeyCode.S))
