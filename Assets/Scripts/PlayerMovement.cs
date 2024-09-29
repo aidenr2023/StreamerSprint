@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxFRHoldTime = 0.4f;
     public float holdJumpTimer = 0.0f;
 
-    public float jumpGroundThreshold = 1;
+    public float jumpGroundThreshold = 0.5f;
 
     public bool isDead = false;
 
