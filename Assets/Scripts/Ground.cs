@@ -101,7 +101,7 @@ public class Ground : MonoBehaviour
         {
             GameObject box = Instantiate(boxTemplate.gameObject);
             float y = goGround.groundHeight;
-            float halfwidth = goCollider.size.x / 2 - 1;
+            float halfwidth = goCollider.size.x / 2 - 5;
             float left = go.transform.position.x - halfwidth;
             float right = go.transform.position.x + halfwidth;
             float x = Random.Range(left, right);

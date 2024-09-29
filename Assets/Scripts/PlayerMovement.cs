@@ -213,16 +213,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        RaycastHit2D obstHitY = Physics2D.Raycast(obstOrigin, Vector2.up, velocity.y * Time.fixedDeltaTime, obstacleLayerMask);
-        if (obstHitY.collider != null)
-        {
-            Obstacle obstacle = obstHitY.collider.GetComponent<Obstacle>();
-            if (obstacle !=null)
-            {
-                hitObstacle(obstacle);
-            }
-        }
-
 
         transform.position = pos;
     }
