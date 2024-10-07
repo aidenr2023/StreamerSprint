@@ -72,22 +72,12 @@ public class PlayerMovement : MonoBehaviour
                 uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
             }
 
-            if (Input.GetKeyUp(KeyCode.D))
-            {
-                trickText.gameObject.SetActive(false);
-            }
-
             if (Input.GetKeyDown(KeyCode.A))
             {
                 trickText.gameObject.SetActive(true);
                 trickText.text = "Left Trick";
                 anim.SetTrigger("Trick");
                 uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
-            }
-
-            if (Input.GetKeyUp(KeyCode.A))
-            {
-                trickText.gameObject.SetActive(false);
             }
 
             if (Input.GetKeyDown(KeyCode.W))
@@ -98,11 +88,6 @@ public class PlayerMovement : MonoBehaviour
                 uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
             }
 
-            if (Input.GetKeyUp(KeyCode.W))
-            {
-                trickText.gameObject.SetActive(false);
-            }
-
             if (Input.GetKeyDown(KeyCode.S))
             {
                 trickText.gameObject.SetActive(true);
@@ -111,12 +96,27 @@ public class PlayerMovement : MonoBehaviour
                 uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
             }
 
-            if (Input.GetKeyUp(KeyCode.S))
-            {
-                trickText.gameObject.SetActive(false);
-            }
+            
         }
-        
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            trickText.gameObject.SetActive(false);
+        }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
