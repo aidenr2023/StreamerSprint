@@ -31,12 +31,18 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayerMask;
     public LayerMask obstacleLayerMask;
     public Animator anim;
+    public UIController uiController;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        uiController = GameObject.Find("UIController").GetComponent<UIController>();
+
+        if (uiController == null)
+        {
+            Debug.LogError("UIController not found. Make sure the object is named correctly and the script is attached.");
+        }
     }
 
     // Update is called once per frame
@@ -58,9 +64,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.D))
         {
+            Debug.Log("Left Trick Performed - Attempting to Gain Subscribers");
             trickText.gameObject.SetActive(true);
             trickText.text = "Left Trick";
             anim.SetTrigger("Trick");
+            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
         }
 
         if (Input.GetKeyUp(KeyCode.D))
@@ -73,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
             trickText.gameObject.SetActive(true);
             trickText.text = "Right Trick";
             anim.SetTrigger("Trick");
+            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
         }
 
         if (Input.GetKeyUp(KeyCode.A))
@@ -85,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
             trickText.gameObject.SetActive(true);
             trickText.text = "Up Trick";
             anim.SetTrigger("Trick");
+            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
         }
 
         if (Input.GetKeyUp(KeyCode.W))
@@ -97,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
             trickText.gameObject.SetActive(true);
             trickText.text = "Down Trick";
             anim.SetTrigger("Trick");
+            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
         }
 
         if (Input.GetKeyUp(KeyCode.S))
