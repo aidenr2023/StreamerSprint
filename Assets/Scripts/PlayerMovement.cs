@@ -61,59 +61,62 @@ public class PlayerMovement : MonoBehaviour
                 holdJumpTimer = 0;
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.D))
+        if (!isGrounded)
         {
-            Debug.Log("Left Trick Performed - Attempting to Gain Subscribers");
-            trickText.gameObject.SetActive(true);
-            trickText.text = "Left Trick";
-            anim.SetTrigger("Trick");
-            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
-        }
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                Debug.Log("Left Trick Performed - Attempting to Gain Subscribers");
+                trickText.gameObject.SetActive(true);
+                trickText.text = "Right Trick";
+                anim.SetTrigger("Trick");
+                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+            }
 
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            trickText.gameObject.SetActive(false);
-        }
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                trickText.gameObject.SetActive(false);
+            }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            trickText.gameObject.SetActive(true);
-            trickText.text = "Right Trick";
-            anim.SetTrigger("Trick");
-            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
-        }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                trickText.gameObject.SetActive(true);
+                trickText.text = "Left Trick";
+                anim.SetTrigger("Trick");
+                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+            }
 
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            trickText.gameObject.SetActive(false);
-        }
+            if (Input.GetKeyUp(KeyCode.A))
+            {
+                trickText.gameObject.SetActive(false);
+            }
 
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            trickText.gameObject.SetActive(true);
-            trickText.text = "Up Trick";
-            anim.SetTrigger("Trick");
-            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
-        }
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                trickText.gameObject.SetActive(true);
+                trickText.text = "Up Trick";
+                anim.SetTrigger("Trick");
+                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+            }
 
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            trickText.gameObject.SetActive(false);
-        }
+            if (Input.GetKeyUp(KeyCode.W))
+            {
+                trickText.gameObject.SetActive(false);
+            }
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            trickText.gameObject.SetActive(true);
-            trickText.text = "Down Trick";
-            anim.SetTrigger("Trick");
-            uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
-        }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                trickText.gameObject.SetActive(true);
+                trickText.text = "Down Trick";
+                anim.SetTrigger("Trick");
+                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+            }
 
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            trickText.gameObject.SetActive(false);
+            if (Input.GetKeyUp(KeyCode.S))
+            {
+                trickText.gameObject.SetActive(false);
+            }
         }
+        
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
