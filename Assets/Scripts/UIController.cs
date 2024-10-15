@@ -36,7 +36,7 @@ public class UIController : MonoBehaviour
         if (player.isDead)
         {
             results.SetActive(true);
-            Invoke("RestartScene", 3f); // For the purpose of the prototype, remove later
+            Invoke("RestartScene", 1f); // For the purpose of the prototype, remove later
         }
     }
     
