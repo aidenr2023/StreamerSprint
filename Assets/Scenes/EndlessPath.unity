@@ -1500,7 +1500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfe9f15ddf863747866fce9efc3523d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: -350
+  gravity: -300
   velocity: {x: 0, y: 0}
   maxXVelocity: 100
   maxAcceleration: 10
