@@ -51,6 +51,8 @@ public class PlayerMovement : MonoBehaviour
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
+        
+        // Keyboard Inputs
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -119,6 +121,55 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isHoldingJump = false;
+        }
+
+        // Phone Inputs
+        HandleTouchInput();
+
+        if (isGrounded || groundDistance <= jumpGroundThreshold)
+        {
+            // Detect screen tap for jump
+            if (isScreenTapped)
+            {
+                isGrounded = false;
+                velocity.y = jumpVelocity;
+                isHoldingJump = true;
+                holdJumpTimer = 0;
+            }
+        }
+
+        if (!isGrounded)
+        {
+            // Detect swipe gestures for tricks
+            if (swipeDirection == SwipeDirection.Right)
+            {
+                Debug.Log("Right Trick Performed - Attempting to Gain Subscribers");
+                PerformTrick("Right Trick");
+            }
+            if (swipeDirection == SwipeDirection.Left)
+            {
+                PerformTrick("Left Trick");
+            }
+            if (swipeDirection == SwipeDirection.Up)
+            {
+                PerformTrick("Up Trick");
+            }
+            if (swipeDirection == SwipeDirection.Down)
+            {
+                PerformTrick("Down Trick");
+            }
+        }
+
+        // Reset trick text after a swipe ends
+        if (swipeEnded)
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        // Release jump when the tap ends
+        if (!isScreenTapped)
         {
             isHoldingJump = false;
         }
@@ -236,4 +287,76 @@ public class PlayerMovement : MonoBehaviour
         Destroy(obstacle.gameObject);
         velocity.x *= 0.7f;
     }
+
+    void PerformTrick(string trickName)
+    {
+        trickText.gameObject.SetActive(true);
+        trickText.text = trickName;
+        anim.SetTrigger("Trick");
+        uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+    }
+
+    #region Touch and Swipe Detection
+
+    private bool isScreenTapped = false;
+    private bool swipeEnded = false;
+    private SwipeDirection swipeDirection = SwipeDirection.None;
+
+    private Vector2 touchStartPos;
+    private float minSwipeDistance = 50f; // Minimum swipe distance in pixels
+
+    private enum SwipeDirection
+    {
+        None,
+        Left,
+        Right,
+        Up,
+        Down
+    }
+
+    void HandleTouchInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                isScreenTapped = true;
+                touchStartPos = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                isScreenTapped = false;
+                swipeEnded = true;
+
+                Vector2 touchEndPos = touch.position;
+                Vector2 swipeVector = touchEndPos - touchStartPos;
+
+                // Check if the swipe distance is long enough
+                if (swipeVector.magnitude > minSwipeDistance)
+                {
+                    // Determine swipe direction
+                    if (Mathf.Abs(swipeVector.x) > Mathf.Abs(swipeVector.y))
+                    {
+                        swipeDirection = swipeVector.x > 0 ? SwipeDirection.Right : SwipeDirection.Left;
+                    }
+                    else
+                    {
+                        swipeDirection = swipeVector.y > 0 ? SwipeDirection.Up : SwipeDirection.Down;
+                    }
+                }
+                else
+                {
+                    swipeDirection = SwipeDirection.None;
+                }
+            }
+            else
+            {
+                swipeEnded = false;
+            }
+        }
+    }
+
+    #endregion
 }
