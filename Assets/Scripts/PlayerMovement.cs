@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim;
     public UIController uiController;
 
+    private Vector2 touchStartPos;
+    private Vector2 touchEndPos;
+    private float minSwipeDistance = 50f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,84 +55,127 @@ public class PlayerMovement : MonoBehaviour
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
-        
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    touchStartPos = touch.position;  // Store the starting position of the touch
+                    break;
+
+                case TouchPhase.Ended:
+                    touchEndPos = touch.position;  // Store the ending position of the touch
+                    HandleTouch(touchStartPos, touchEndPos);
+                    break;
+            }
+        }
+
         // Keyboard Inputs
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                isGrounded = false;
-                velocity.y = jumpVelocity;
-                isHoldingJump = true;
-                holdJumpTimer = 0;
+                Jump();
             }
         }
+        
+
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+        {
+            trickText.gameObject.SetActive(false);
+        }
+
+        HandleTrickInput();
+    }
+
+    private void HandleTrickInput()
+    {
         if (!isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                Debug.Log("Left Trick Performed - Attempting to Gain Subscribers");
-                trickText.gameObject.SetActive(true);
-                trickText.text = "Right Trick";
-                anim.SetTrigger("Trick");
-                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+                PerformTrick("Right Trick", "D");
             }
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                trickText.gameObject.SetActive(true);
-                trickText.text = "Left Trick";
-                anim.SetTrigger("Trick");
-                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+                PerformTrick("Left Trick", "A");
             }
 
             if (Input.GetKeyDown(KeyCode.W))
             {
-                trickText.gameObject.SetActive(true);
-                trickText.text = "Up Trick";
-                anim.SetTrigger("Trick");
-                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+                PerformTrick("Up Trick", "W");
             }
 
             if (Input.GetKeyDown(KeyCode.S))
             {
-                trickText.gameObject.SetActive(true);
-                trickText.text = "Down Trick";
-                anim.SetTrigger("Trick");
-                uiController.GainSubscribers(1); // Gain 1 subscribers for this skill move
+                PerformTrick("Down Trick", "S");
             }
-
-            
         }
-        if (Input.GetKeyUp(KeyCode.D))
+
+        // Deactivate trick text when keys are released
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
         {
             trickText.gameObject.SetActive(false);
         }
-
-        if (Input.GetKeyUp(KeyCode.A))
-        {
-            trickText.gameObject.SetActive(false);
-        }
-
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            trickText.gameObject.SetActive(false);
-        }
-
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            trickText.gameObject.SetActive(false);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            isHoldingJump = false;
-        }
-
-        
-
-        
     }
+
+
+    private void Jump()
+    {
+        isGrounded = false;
+        velocity.y = jumpVelocity;
+        isHoldingJump = true;
+        holdJumpTimer = 0;
+    }
+    private void HandleTouch(Vector2 start, Vector2 end)
+    {
+        Vector2 swipeDirection = end - start;
+        float swipeDistance = swipeDirection.magnitude;
+
+        if (swipeDistance < minSwipeDistance)
+        {
+            // It's a tap, so trigger a jump
+            if (isGrounded)
+            {
+                Jump();
+            }
+        }
+        else
+        {
+            // It's a swipe, determine direction
+            swipeDirection.Normalize();  // Normalize to get just the direction
+
+            if (Vector2.Dot(swipeDirection, Vector2.up) > 0.7f)
+            {
+                PerformTrick("Up Trick", "W");
+            }
+            else if (Vector2.Dot(swipeDirection, Vector2.down) > 0.7f)
+            {
+                PerformTrick("Down Trick", "S");
+            }
+            else if (Vector2.Dot(swipeDirection, Vector2.left) > 0.7f)
+            {
+                PerformTrick("Left Trick", "A");
+            }
+            else if (Vector2.Dot(swipeDirection, Vector2.right) > 0.7f)
+            {
+                PerformTrick("Right Trick", "D");
+            }
+        }
+    }
+
+    private void PerformTrick(string trickName, string key)
+    {
+        trickText.gameObject.SetActive(true);
+        trickText.text = trickName;
+        anim.SetTrigger("Trick");
+        uiController.GainSubscribers(1); // Gain subscribers for tricks
+        Debug.Log($"{trickName} Performed - Simulating {key} key press");
+    }
+
     // Increment the player's position every frame and also adjust the difference between frames
     private void FixedUpdate()
     {
