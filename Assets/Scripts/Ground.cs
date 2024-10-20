@@ -14,6 +14,10 @@ public class Ground : MonoBehaviour
     bool didGenerateGround = false;
 
     public Obstacle boxTemplate;
+    public Obstacle sewerTemplate;
+
+    private int sewerObstacleCount = 0;
+    public int maxSewerObstacles = 1;
 
     private void Awake()
     {
@@ -21,6 +25,10 @@ public class Ground : MonoBehaviour
         collider = GetComponent<BoxCollider2D> ();
         groundHeight = transform.position.y + (collider.size.y / 2);
         screenRight = Camera.main.transform.position.x * 2;
+        if(player == null || boxTemplate == null)
+        {   
+        Debug.LogError("Required component missing");
+        }
     }
 
     // Start is called before the first frame update
@@ -72,7 +80,7 @@ public class Ground : MonoBehaviour
         float h2 = player.jumpVelocity * t + (0.5f * (player.gravity * (t * t)));
         float maxJumpHeight = h1 + h2;
 
-        // Limit the Y position to ensure it’s within a jumpable range
+        // Limit the Y position to ensure itï¿½s within a jumpable range
         float maxY = maxJumpHeight * 0.3f;
         maxY += groundHeight;
         float minY = 1;
@@ -110,22 +118,79 @@ public class Ground : MonoBehaviour
 
         // Generate obstacles
         int obstacleNum = Random.Range(0, 4);
+        int sewerCountInThisGeneration = 0;
         for (int i = 0; i < obstacleNum; i++)
         {
-            GameObject box = Instantiate(boxTemplate.gameObject);
+         
+         Obstacle chosenTemplate;
+            // Choose the template based on the sewer count
+            if (sewerCountInThisGeneration < maxSewerObstacles && Random.Range(0, 2) == 0)
+            {
+                chosenTemplate = sewerTemplate;
+                sewerCountInThisGeneration++; // Increment if a sewer is chosen
+            }
+            else
+            {
+                chosenTemplate = boxTemplate;
+            }
+
+            GameObject obstacle = Instantiate(chosenTemplate.gameObject);
             float y = goGround.groundHeight;
             float halfwidth = goCollider.size.x / 2 - 5;
             float left = go.transform.position.x - halfwidth;
             float right = go.transform.position.x + halfwidth;
             float x = Random.Range(left, right);
-            Vector2 boxPos = new Vector2(x, y);
-            box.transform.position = boxPos;
+            Vector2 obstaclePos = new Vector2(x, y);
+            obstacle.transform.position = obstaclePos;
+
+            if (chosenTemplate == sewerTemplate)
+            {
+            sewerObstacleCount++;
+            StartCoroutine(RaiseObstacle(obstacle, obstaclePos, goGround.groundHeight));
+            }
         }
     }
+
+    IEnumerator RaiseObstacle(GameObject obstacle, Vector2 startPos, float targetHeight) //method to raise obstacle
+        {
+           
+        
+        Vector2 belowGroundPos = new Vector2(startPos.x, startPos.y - 2.0f);
+        obstacle.transform.position = belowGroundPos;
+
+        yield return new WaitForSeconds(0.1f); 
+
+        Debug.Log("Target height for obstacle: " + targetHeight);
+
+        float raiseSpeed = 2f; 
+        while (obstacle.transform.position.y < targetHeight)
+        {
+            obstacle.transform.position = new Vector2(obstacle.transform.position.x, 
+                Mathf.MoveTowards(obstacle.transform.position.y, targetHeight, raiseSpeed * Time.deltaTime));
+            
+            
+            Debug.Log("Current position: " + obstacle.transform.position);
+            yield return null; 
+        }
+
+        obstacle.transform.position = new Vector2(obstacle.transform.position.x, targetHeight);
+        Destroy(obstacle, 5f); // how long till obstacle is destroyed
+        sewerObstacleCount--;
+        Debug.Log("Obstacle raised to: " + obstacle.transform.position);
+            
+        }
 
     // Method to check if the ground is the first platform after the game starts
     bool IsFirstGround()
     {
         return player.transform.position.x < screenRight + 10; // Adjust condition to match your logic for the first platform
     }
+
+     bool IsPlayerClose(Vector2 obstaclePos)
+    {
+         float distanceThreshold = 1f;
+        float distance = Vector2.Distance(player.transform.position, obstaclePos);
+        return distance < distanceThreshold;
+    }
+    
 }
