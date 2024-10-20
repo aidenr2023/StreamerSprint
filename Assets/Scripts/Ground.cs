@@ -118,16 +118,18 @@ public class Ground : MonoBehaviour
 
         // Generate obstacles
         int obstacleNum = Random.Range(0, 4);
-        int sewerCountInThisGeneration = 0;
+        bool sewerGenerated = false;
+        
         for (int i = 0; i < obstacleNum; i++)
         {
          
          Obstacle chosenTemplate;
+            
             // Choose the template based on the sewer count
-            if (sewerCountInThisGeneration < maxSewerObstacles && Random.Range(0, 2) == 0)
+            if (!sewerGenerated && Random.Range(0, 2) == 0)
             {
                 chosenTemplate = sewerTemplate;
-                sewerCountInThisGeneration++; // Increment if a sewer is chosen
+                sewerGenerated = true; // Increment if a sewer is chosen
             }
             else
             {
