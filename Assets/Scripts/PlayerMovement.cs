@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
                     touchStartPos = touch.position;  // Store the starting position of the touch
                     break;
 
-                case TouchPhase.Ended:
+                case TouchPhase.Moved:
                     touchEndPos = touch.position;  // Store the ending position of the touch
                     HandleTouch(touchStartPos, touchEndPos);
                     break;
