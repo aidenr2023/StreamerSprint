@@ -101,11 +101,7 @@ public class Ground : MonoBehaviour
         maxX += groundRight;
 
         // For the first platform after game start, ensure it's within a reachable range
-        if (IsFirstGround())
-        {
-            // Set a lower maxX and ensure it is reachable
-            maxX = Mathf.Min(maxX, screenRight + 5); // Set a reasonable value for the first jump distance
-        }
+       
 
         float minX = screenRight + 5;
         float actualX = Random.Range(minX, maxX);
@@ -119,7 +115,24 @@ public class Ground : MonoBehaviour
         // Generate obstacles
         int obstacleNum = Random.Range(0, 4);
         bool sewerGenerated = false;
-        
+
+        if (IsFirstGround())
+        {
+            // Limit the horizontal distance for the first platform
+            // Use a smaller value for the player's slower initial speed
+            float initialDistance = player.velocity.x * 2.0f; // Adjust multiplier to control initial distance
+            actualX = Mathf.Min(actualX, player.transform.position.x + initialDistance);
+
+            // Ensure the first platform is within a reachable range by clamping its distance
+            float minFirstPlatformX = player.transform.position.x + 3f; // Ensures it's not too close
+            actualX = Mathf.Clamp(actualX, minFirstPlatformX, screenRight); // Adjust screenRight based on viewable area
+        }
+        else
+        {
+            // Original logic for subsequent platforms
+            actualX = Random.Range(minX, maxX);
+        }
+
         for (int i = 0; i < obstacleNum; i++)
         {
          
