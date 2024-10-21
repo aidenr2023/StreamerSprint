@@ -104,7 +104,7 @@ public class Ground : MonoBehaviour
         if (IsFirstGround())
         {
             // Set a lower maxX and ensure it is reachable
-            maxX = Mathf.Min(maxX, screenRight + 8); // Set a reasonable value for the first jump distance
+            maxX = Mathf.Min(maxX, screenRight + 5); // Set a reasonable value for the first jump distance
         }
 
         float minX = screenRight + 5;
