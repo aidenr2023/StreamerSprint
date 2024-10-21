@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isDead = false;
 
     public TextMeshProUGUI trickText;
+    public TextMeshProUGUI obstacleText;
 
     public LayerMask groundLayerMask;
     public LayerMask obstacleLayerMask;
@@ -288,8 +289,17 @@ public class PlayerMovement : MonoBehaviour
     {
         Destroy(obstacle.gameObject);
         velocity.x *= 0.7f;
+        StartCoroutine(HideObstacleText());
+        obstacleText.gameObject.SetActive(true);
+
+
     }
 
+    IEnumerator HideObstacleText()
+    {
+        yield return new WaitForSeconds(.5f);
+        obstacleText.gameObject.SetActive(false);
+    }
     
 
    
