@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8707679625943039669}
   - component: {fileID: 6961537841795034587}
   - component: {fileID: 4724853766614801382}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,9 +74,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1002
+  m_SortingOrder: 999
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.06132078, b: 0.06132078, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
