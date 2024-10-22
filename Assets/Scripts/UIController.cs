@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour
     void Update()
     {
         distance = Mathf.FloorToInt(player.distance);
-        distanceText.text = distance + "m";
+        distanceText.text = distance + " Views";
 
         if (player.isDead)
         {
@@ -114,7 +114,7 @@ public class UIController : MonoBehaviour
 
     void UpdateHighScoreText()
     {
-        highScoreText.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)}" + "m";
+        highScoreText.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)}" + " Views";
     }
 
     void RestartScene()
