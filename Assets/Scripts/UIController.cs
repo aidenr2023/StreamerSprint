@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
 
     GameObject results;
     int distance;
-    int subscriber;
+    public int subscriber;
     int lastReportedSubscriberCount;
 
     // Start is called before the first frame update
