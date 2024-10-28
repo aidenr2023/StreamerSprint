@@ -9,6 +9,8 @@ public class UIController : MonoBehaviour
     Text distanceText;
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] TextMeshProUGUI subscriberText;
+    [SerializeField] GameObject summary;
+    public Animator anim;
 
     GameObject results;
     int distance;
@@ -23,6 +25,7 @@ public class UIController : MonoBehaviour
 
         results = GameObject.Find("Results");
         results.SetActive(false);
+        summary.SetActive(false);
         UpdateHighScoreText();
         LoadSubscriber(); // Load subscriber count from PlayerPrefs
     }
@@ -35,8 +38,7 @@ public class UIController : MonoBehaviour
 
         if (player.isDead)
         {
-            results.SetActive(true);
-            Invoke("RestartScene", 1f); // For the purpose of the prototype, remove later
+            Summary();
         }
     }
     
@@ -120,5 +122,11 @@ public class UIController : MonoBehaviour
     void RestartScene()
     {
         SceneManager.LoadScene("EndlessPath");
+    }
+
+    void Summary()
+    {
+        summary.SetActive(true);
+        anim.Play("SummaryScreen");
     }
 }
