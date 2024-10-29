@@ -127,6 +127,6 @@ public class UIController : MonoBehaviour
     void Summary()
     {
         summary.SetActive(true);
-        anim.Play("SummaryScreen");
+        
     }
 }
