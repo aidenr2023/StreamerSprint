@@ -130,9 +130,9 @@ TextureImporter:
         y: 0
         width: 54
         height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      alignment: 9
+      pivot: {x: 0.5017588, y: 0.5105533}
+      border: {x: 0, y: 0, z: 41, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -152,7 +152,7 @@ TextureImporter:
         width: 12
         height: 13
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -173,7 +173,7 @@ TextureImporter:
         width: 12
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,7 +194,7 @@ TextureImporter:
         width: 12
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -215,7 +215,7 @@ TextureImporter:
         width: 12
         height: 15
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -236,7 +236,7 @@ TextureImporter:
         width: 12
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -244,6 +244,48 @@ TextureImporter:
       bones: []
       spriteID: 6bee6c4e297a69247a2c16bb29857ddd
       internalID: 1964010573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sewer_Man_Pop_Out-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 54
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 27, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79cc198aba283054d95dee04642b8419
+      internalID: 2109996479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sewer_Man_Pop_Out-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 54
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 13, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e319cc18484d79446a64fe65b38d6617
+      internalID: -1001596969
       vertices: []
       indices: 
       edges: []
@@ -265,6 +307,8 @@ TextureImporter:
       Sewer_Man_Pop_Out-Sheet_3: -935735088
       Sewer_Man_Pop_Out-Sheet_4: 371617451
       Sewer_Man_Pop_Out-Sheet_5: 1964010573
+      Sewer_Man_Pop_Out-Sheet_6: 2109996479
+      Sewer_Man_Pop_Out-Sheet_7: -1001596969
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
