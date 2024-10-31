@@ -9,6 +9,7 @@ public class UIController : MonoBehaviour
     Text distanceText;
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] TextMeshProUGUI subscriberText;
+    [SerializeField] TextMeshProUGUI subscriberGainedText;
     [SerializeField] GameObject summary;
     public Animator anim;
 
@@ -16,8 +17,8 @@ public class UIController : MonoBehaviour
     int distance;
     public int subscriber;
     int lastReportedSubscriberCount;
+    int sessionSubscribers;
 
-    // Start is called before the first frame update
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
@@ -26,11 +27,13 @@ public class UIController : MonoBehaviour
         results = GameObject.Find("Results");
         results.SetActive(false);
         summary.SetActive(false);
+
+        // Reset session subscribers at the start
+        sessionSubscribers = 0;
         UpdateHighScoreText();
-        LoadSubscriber(); // Load subscriber count from PlayerPrefs
+        LoadSubscriber();
     }
 
-    // Update is called once per frame
     void Update()
     {
         distance = Mathf.FloorToInt(player.distance);
@@ -41,68 +44,56 @@ public class UIController : MonoBehaviour
             Summary();
         }
     }
-    
+
     void FixedUpdate()
     {
-        // Call both high score and subscriber updates
         CheckHighScore();
         UpdateSubscriber();
     }
 
     void UpdateSubscriber()
     {
-    // Calculate the new subscribers gained in the current session
-    int newSubscribersGained = distance / 100;
+        int newSubscribersGained = distance / 100;
+        int newSessionSubscribers = newSubscribersGained - lastReportedSubscriberCount;
 
-    // Calculate the actual subscribers this session should add, relative to the previous session
-    int sessionSubscribers = newSubscribersGained - lastReportedSubscriberCount;
+        if (newSessionSubscribers > 0)
+        {
+            sessionSubscribers += newSessionSubscribers; // Accumulate in the session
+            subscriber += newSessionSubscribers;         // Update total subscriber count
+            PlayerPrefs.SetInt("Subscribers", subscriber);
+            PlayerPrefs.Save();
 
-    // Update the subscriber count only if there's new subscribers to add
-    if (sessionSubscribers > 0)
-    {
-        // Add the session's new subscribers to the current total
-        subscriber += sessionSubscribers;
+            lastReportedSubscriberCount = newSubscribersGained;
 
-        // Save the current subscriber count to PlayerPrefs
-        PlayerPrefs.SetInt("Subscribers", subscriber);
-        PlayerPrefs.Save(); // Save immediately
+            UpdateSubscriberText();
 
-        // Update last reported subscriber count to prevent adding the same amount again
-        lastReportedSubscriberCount = newSubscribersGained;
-
-        // Update the UI
-        UpdateSubscriberText();
-
-        // Log the update for debugging
-        Debug.Log($"New Subscribers Gained: {sessionSubscribers}, Total Subscribers Updated: {subscriber}");
+            // Update only the session gain UI
+            subscriberGainedText.text = $"+ {sessionSubscribers}";
+        }
     }
-    else
-    {
-        Debug.Log("No new subscribers gained this update.");
-    }
-}
 
     void UpdateSubscriberText()
     {
         subscriberText.text = $"Subscribers: {subscriber}";
-        Debug.Log("Updated Subscribers: " + subscriber); // Debug to check if this is called and has the expected values
     }
 
     public void GainSubscribers(int amount)
     {
-        Debug.Log("GainSubscribers called with amount: " + amount);
         subscriber += amount;
+        sessionSubscribers += amount;  // Add to session total as well
         PlayerPrefs.SetInt("Subscribers", subscriber);
         PlayerPrefs.Save();
+
         UpdateSubscriberText();
-        Debug.Log($"Gained {amount} Subscribers from Skill Move. Total Subscribers: {subscriber}");
+
+        // Show the current session gain
+        subscriberGainedText.text = $"+ {sessionSubscribers}";
     }
 
     void LoadSubscriber()
     {
         subscriber = PlayerPrefs.GetInt("Subscribers", 0);
-        UpdateSubscriberText(); // Update UI with loaded subscribers
-        Debug.Log("Loaded Subscribers from PlayerPrefs: " + subscriber);
+        UpdateSubscriberText();
     }
 
     void CheckHighScore()
@@ -110,23 +101,19 @@ public class UIController : MonoBehaviour
         if (distance > PlayerPrefs.GetInt("HighScore", 0))
         {
             PlayerPrefs.SetInt("HighScore", distance);
-            PlayerPrefs.Save(); // Ensure PlayerPrefs are saved immediately
+            PlayerPrefs.Save();
         }
     }
 
     void UpdateHighScoreText()
     {
-        highScoreText.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)}" + " Views";
-    }
-
-    void RestartScene()
-    {
-        SceneManager.LoadScene("EndlessPath");
+        highScoreText.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)} Views";
     }
 
     void Summary()
     {
         summary.SetActive(true);
-        
+        anim.Play("SummaryScreen");
+        subscriberGainedText.text = $"+ {sessionSubscribers}";
     }
 }
