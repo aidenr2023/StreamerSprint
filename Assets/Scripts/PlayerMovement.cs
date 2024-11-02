@@ -97,22 +97,22 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.D))
             {
-                PerformTrick("Right Trick", "D");
+                PerformTrick("+1", "D");
             }
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                PerformTrick("Left Trick", "A");
+                PerformTrick("+1", "A");
             }
 
             if (Input.GetKeyDown(KeyCode.W))
             {
-                PerformTrick("Up Trick", "W");
+                PerformTrick("+1", "W");
             }
 
             if (Input.GetKeyDown(KeyCode.S))
             {
-                PerformTrick("Down Trick", "S");
+                PerformTrick("+1", "S");
             }
         }
 
@@ -144,26 +144,26 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
             }
         }
-        else
+        else if(!isGrounded)
         {
             // It's a swipe, determine direction
             swipeDirection.Normalize();  // Normalize to get just the direction
 
             if (Vector2.Dot(swipeDirection, Vector2.up) > 0.7f)
             {
-                PerformTrick("Up Trick", "W");
+                PerformTrick("+1", "W");
             }
             else if (Vector2.Dot(swipeDirection, Vector2.down) > 0.7f)
             {
-                PerformTrick("Down Trick", "S");
+                PerformTrick("+1", "S");
             }
             else if (Vector2.Dot(swipeDirection, Vector2.left) > 0.7f)
             {
-                PerformTrick("Left Trick", "A");
+                PerformTrick("+1", "A");
             }
             else if (Vector2.Dot(swipeDirection, Vector2.right) > 0.7f)
             {
-                PerformTrick("Right Trick", "D");
+                PerformTrick("+1", "D");
             }
         }
     }
