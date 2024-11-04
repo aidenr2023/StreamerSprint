@@ -19,6 +19,11 @@ public class Ground : MonoBehaviour
     private int sewerObstacleCount = 0;
     public int maxSewerObstacles = 1;
 
+    public Obstacle skyObstacleTemplate; // Add a reference for the sky obstacle template
+    private float minSkyY = 10.0f; // Minimum Y coordinate for sky obstacle
+    private float maxSkyY = 30.0f; // Maximum Y coordinate for sky obstacle // Maximum height above ground 
+    public float skyObstacleSpawnChance = 0.3f; // 30% chance to spawn a sky obstacle
+
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
@@ -148,6 +153,26 @@ public class Ground : MonoBehaviour
             StartCoroutine(RaiseObstacle(obstacle, obstaclePos, goGround.groundHeight));
             }
         }
+
+        // Generate sky obstacle
+        if (skyObstacleTemplate != null && Random.value < skyObstacleSpawnChance)
+        {
+            GameObject skyObstacle = Instantiate(skyObstacleTemplate.gameObject);
+
+            // Define X position within ground boundaries
+            float skyX = Random.Range(go.transform.position.x - goCollider.size.x / 2, go.transform.position.x + goCollider.size.x / 2);
+
+            // Set the Y position to be within the specified range
+            float skyY = Random.Range(minSkyY, maxSkyY); // Random Y coordinate between defined min and max
+
+            // Debugging: Log the Y position
+            Debug.Log($"Y Position for Sky Obstacle: {skyY}");
+
+            // Set final position for sky obstacle
+            Vector2 skyObstaclePos = new Vector2(skyX, skyY);
+            skyObstacle.transform.position = skyObstaclePos;
+        }
+
     }
 
     IEnumerator RaiseObstacle(GameObject obstacle, Vector2 startPos, float targetHeight) //method to raise obstacle

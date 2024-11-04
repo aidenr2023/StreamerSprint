@@ -5276,6 +5276,8 @@ MonoBehaviour:
   boxTemplate: {fileID: -7730874951388955677, guid: 028e1408d273a2e43a3747147c922c4d, type: 3}
   sewerTemplate: {fileID: 4724853766614801382, guid: 9656a9d3035551b4c87f8dcc7041e6f2, type: 3}
   maxSewerObstacles: 2
+  skyObstacleTemplate: {fileID: 1219844953718125980, guid: 5e2e6d645cde4c94b866297dd6424c2a, type: 3}
+  skyObstacleSpawnChance: 0.3
 --- !u!1 &1717429250
 GameObject:
   m_ObjectHideFlags: 0
