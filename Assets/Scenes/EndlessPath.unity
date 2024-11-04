@@ -1579,7 +1579,7 @@ Transform:
   m_GameObject: {fileID: 581721181}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.07, y: 9.7, z: 10}
+  m_LocalPosition: {x: 41.2, y: 9.7, z: 10}
   m_LocalScale: {x: 24.005299, y: 21.27664, z: 13.816}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1598,6 +1598,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 1
+  sprites:
+  - {fileID: 21300000, guid: e10b2279f24c9de43a5b4f5a5ee6b6c6, type: 3}
+  - {fileID: 21300000, guid: 80c883c6d661044438c5c8869a728668, type: 3}
+  - {fileID: 21300000, guid: a52c19b1b1ee05b47901a1a5acadbc02, type: 3}
+  - {fileID: 21300000, guid: d1dcbcbb1f632664d8a61f36254c56d0, type: 3}
 --- !u!212 &581721184
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1639,8 +1644,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 100
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.7595644, b: 0.4481132, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a52c19b1b1ee05b47901a1a5acadbc02, type: 3}
+  m_Color: {r: 0.9716981, g: 0.93402255, b: 0.88461196, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2621,8 +2626,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.5754717, g: 0.34322456, b: 0.008143453, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 80c883c6d661044438c5c8869a728668, type: 3}
+  m_Color: {r: 0.9433962, g: 0.916236, b: 0.87664646, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2645,6 +2650,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 5
+  sprites:
+  - {fileID: 21300000, guid: e10b2279f24c9de43a5b4f5a5ee6b6c6, type: 3}
+  - {fileID: 21300000, guid: 80c883c6d661044438c5c8869a728668, type: 3}
+  - {fileID: 21300000, guid: a52c19b1b1ee05b47901a1a5acadbc02, type: 3}
+  - {fileID: 21300000, guid: d1dcbcbb1f632664d8a61f36254c56d0, type: 3}
 --- !u!1 &901509100
 GameObject:
   m_ObjectHideFlags: 0
@@ -3019,6 +3029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 1
+  sprites: []
 --- !u!212 &1007721799
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4108,6 +4119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   depth: 1
+  sprites: []
 --- !u!212 &1493230788
 SpriteRenderer:
   m_ObjectHideFlags: 0
