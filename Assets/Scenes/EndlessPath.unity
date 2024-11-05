@@ -1075,6 +1075,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1340632105}
+  - {fileID: 1348425345}
   m_Father: {fileID: 2056453772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2245,7 +2246,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfe9f15ddf863747866fce9efc3523d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioManager: {fileID: 1951807545}
   gravity: -300
   velocity: {x: 0, y: 0}
   maxXVelocity: 100
@@ -2271,6 +2271,7 @@ MonoBehaviour:
     m_Bits: 128
   anim: {fileID: 874642346}
   uiController: {fileID: 1080911135}
+  audioManager: {fileID: 1951807545}
 --- !u!212 &874642345
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3358,12 +3359,20 @@ MonoBehaviour:
   subscriberText: {fileID: 1552742325}
   subscriberGainedText: {fileID: 1763056280}
   milestoneProgressText: {fileID: 163387866}
+  milestoneSprites:
+  - {fileID: -1388900323, guid: e1f128e750d6afb4b81a07337a2e086c, type: 3}
+  - {fileID: 0}
+  - {fileID: -969162280, guid: b1867fadede3a9f48b22440c88ed1b15, type: 3}
+  - {fileID: 135013237, guid: b41ee01308399044db9d3621262df906, type: 3}
+  milestoneImage: {fileID: 1348425347}
   milestoneSlider: {fileID: 1340632106}
   summary: {fileID: 1538572644}
   anim: {fileID: 1538572647}
-  CanSpawnPigeon: 0
+  canSpawnPigeon: 0
+  canSpawnSewer: 0
+  canDoTricks: 0
   subscriber: 0
-  milestoneThresholds: 1900000064000000fa000000f4010000
+  milestoneThresholds: 1900000032000000960000002c010000
   milestoneRewards:
   - Milestone 1
   - Bonus Subscribers
@@ -3947,6 +3956,81 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!1 &1348425344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1348425345}
+  - component: {fileID: 1348425346}
+  - component: {fileID: 1348425347}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1348425345
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348425344}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.25513917, y: 0.25513917, z: 0.25513917}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 210987116}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 170, y: 115.3}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1348425346
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348425344}
+  m_CullTransparentMesh: 1
+--- !u!114 &1348425347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348425344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1420970586
 GameObject:
   m_ObjectHideFlags: 0

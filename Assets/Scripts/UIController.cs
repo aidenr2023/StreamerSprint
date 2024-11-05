@@ -12,6 +12,8 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI subscriberText;
     [SerializeField] TextMeshProUGUI subscriberGainedText;
     [SerializeField] TextMeshProUGUI milestoneProgressText;
+    [SerializeField] private Sprite[] milestoneSprites;
+    [SerializeField] private Image milestoneImage;
     [SerializeField] Slider milestoneSlider;
     [SerializeField] GameObject summary;
     public Animator anim;
@@ -46,6 +48,8 @@ public class UIController : MonoBehaviour
         UpdateHighScoreText();
         LoadSubscriber();
         UpdateMilestoneProgress();
+        UpdateMilestoneImage();
+        CheckMilestones();
     }
 
     void Update()
@@ -56,6 +60,10 @@ public class UIController : MonoBehaviour
         if (player.isDead)
         {
             Summary();
+        }
+        else
+        {
+            CheckHighScore();
         }
 
         if(subscriber >= 25)
@@ -131,13 +139,29 @@ public class UIController : MonoBehaviour
             milestoneProgressText.text = $"Next Milestone: {subscriber}/{nextMilestone} ({progressPercentage * 100:F1}%)";
             milestoneSlider.value = progressPercentage;
             milestoneSlider.maxValue = 1f;
+            UpdateMilestoneImage();
         }
         else
         {
             milestoneProgressText.text = "All milestones reached!";
             milestoneSlider.value = 1f;
+            milestoneImage.sprite = null;
         }
     }
+
+    void UpdateMilestoneImage()
+    {
+        // Show the current milestone icon if it exists in the array
+        if (nextMilestoneIndex < milestoneSprites.Length && milestoneSprites[nextMilestoneIndex] != null)
+        {
+            milestoneImage.sprite = milestoneSprites[nextMilestoneIndex];
+        }
+        else
+        {
+            milestoneImage.sprite = null; // Hide sprite if no sprite available
+        }
+    }
+
 
     public void GainSubscribers(int amount)
     {
@@ -164,6 +188,7 @@ public class UIController : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", distance);
             PlayerPrefs.Save();
+            UpdateHighScoreText();
         }
     }
 
