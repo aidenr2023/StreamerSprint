@@ -3360,8 +3360,14 @@ MonoBehaviour:
   milestoneSlider: {fileID: 1340632106}
   summary: {fileID: 1538572644}
   anim: {fileID: 1538572647}
+  CanSpawnPigeon: 0
   subscriber: 0
-  milestoneThresholds: 64000000fa000000f4010000e8030000
+  milestoneThresholds: 190000003200000064000000fa000000
+  milestoneRewards:
+  - Milestone 1
+  - Bonus Subscribers
+  - Milestone 2
+  - Milestone 3
 --- !u!1 &1116496514
 GameObject:
   m_ObjectHideFlags: 0
@@ -3916,7 +3922,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1154542861}
   m_FillRect: {fileID: 1154542860}
   m_HandleRect: {fileID: 1790371746}

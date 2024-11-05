@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class UIController : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject summary;
     public Animator anim;
 
+    public bool CanSpawnPigeon = false;
     GameObject results;
     int distance;
     public int subscriber;
@@ -22,8 +24,11 @@ public class UIController : MonoBehaviour
     int sessionSubscribers;
 
     // Milestone fields
-    [SerializeField] private int[] milestoneThresholds = { 100, 250, 500, 1000 }; // Milestone subscriber thresholds
-    private int nextMilestoneIndex = 0;  // Tracks next milestone
+    [SerializeField] private int[] milestoneThresholds = { 100, 250, 500, 1000 };
+    private int nextMilestoneIndex = 0;
+
+    // Rewards
+    [SerializeField] private string[] milestoneRewards = { "Milestone 1", "Bonus Subscribers", "Milestone 2", "Milestone 3" };
 
     private void Awake()
     {
@@ -48,6 +53,10 @@ public class UIController : MonoBehaviour
         if (player.isDead)
         {
             Summary();
+        }
+        if (subscriber >= 100)
+        {
+            CanSpawnPigeon = true;
         }
     }
 
@@ -74,7 +83,7 @@ public class UIController : MonoBehaviour
             UpdateSubscriberText();
             subscriberGainedText.text = $"+ {sessionSubscribers}";
 
-            CheckMilestones(); // Check for milestone progression
+            CheckMilestones();
         }
     }
 
@@ -87,10 +96,9 @@ public class UIController : MonoBehaviour
     {
         while (nextMilestoneIndex < milestoneThresholds.Length && subscriber >= milestoneThresholds[nextMilestoneIndex])
         {
-            // Trigger milestone unlock (you could also add animation or sound here)
             Debug.Log($"Milestone reached: {milestoneThresholds[nextMilestoneIndex]} subscribers!");
 
-            nextMilestoneIndex++; // Move to the next milestone
+            nextMilestoneIndex++;
         }
         UpdateMilestoneProgress();
     }
@@ -100,20 +108,16 @@ public class UIController : MonoBehaviour
         if (nextMilestoneIndex < milestoneThresholds.Length)
         {
             int nextMilestone = milestoneThresholds[nextMilestoneIndex];
-
-            // Ensure progressPercentage does not exceed 1
             float progressPercentage = Mathf.Clamp01((float)subscriber / nextMilestone);
 
             milestoneProgressText.text = $"Next Milestone: {subscriber}/{nextMilestone} ({progressPercentage * 100:F1}%)";
-
-            // Update slider value
             milestoneSlider.value = progressPercentage;
-            milestoneSlider.maxValue = 1f; // Slider max value should be 1 for percentage representation
+            milestoneSlider.maxValue = 1f;
         }
         else
         {
             milestoneProgressText.text = "All milestones reached!";
-            milestoneSlider.value = 1f; // Set slider to full if all milestones are reached
+            milestoneSlider.value = 1f;
         }
     }
 

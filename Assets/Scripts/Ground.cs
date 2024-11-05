@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ground : MonoBehaviour
 {
     PlayerMovement player;
-
+    UIController uiController;
     public float groundHeight;
     public float groundRight;
     public float screenRight;
@@ -27,6 +27,7 @@ public class Ground : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        uiController = GameObject.Find("UIController").GetComponent<UIController>();
         collider = GetComponent<BoxCollider2D> ();
         groundHeight = transform.position.y + (collider.size.y / 2);
         screenRight = Camera.main.transform.position.x * 2;
@@ -39,7 +40,7 @@ public class Ground : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -155,22 +156,25 @@ public class Ground : MonoBehaviour
         }
 
         // Generate sky obstacle
-        if (skyObstacleTemplate != null && Random.value < skyObstacleSpawnChance)
+        if (uiController != null && uiController.CanSpawnPigeon)
         {
-            GameObject skyObstacle = Instantiate(skyObstacleTemplate.gameObject);
+            if (skyObstacleTemplate != null && Random.value < skyObstacleSpawnChance)
+            {
+                GameObject skyObstacle = Instantiate(skyObstacleTemplate.gameObject);
 
-            // Define X position within ground boundaries
-            float skyX = Random.Range(go.transform.position.x - goCollider.size.x / 2, go.transform.position.x + goCollider.size.x / 2);
+                // Define X position within ground boundaries
+                float skyX = Random.Range(go.transform.position.x - goCollider.size.x / 2, go.transform.position.x + goCollider.size.x / 2);
 
-            // Set the Y position to be within the specified range
-            float skyY = Random.Range(minSkyY, maxSkyY); // Random Y coordinate between defined min and max
+                // Set the Y position to be within the specified range
+                float skyY = Random.Range(minSkyY, maxSkyY); // Random Y coordinate between defined min and max
 
-            // Debugging: Log the Y position
-            Debug.Log($"Y Position for Sky Obstacle: {skyY}");
+                // Debugging: Log the Y position
+                Debug.Log($"Y Position for Sky Obstacle: {skyY}");
 
-            // Set final position for sky obstacle
-            Vector2 skyObstaclePos = new Vector2(skyX, skyY);
-            skyObstacle.transform.position = skyObstaclePos;
+                // Set final position for sky obstacle
+                Vector2 skyObstaclePos = new Vector2(skyX, skyY);
+                skyObstacle.transform.position = skyObstaclePos;
+            }
         }
 
     }
