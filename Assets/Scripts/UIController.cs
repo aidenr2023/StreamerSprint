@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class UIController : MonoBehaviour
 {
-    PlayerMovement player;
+    PlayerMovement player; // Reference to PlayerMovement
     Text distanceText;
     [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] TextMeshProUGUI subscriberText;
@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Sprite[] milestoneSprites;
     [SerializeField] private Image milestoneImage;
     [SerializeField] Slider milestoneSlider;
-    [SerializeField] GameObject summary;
+    [SerializeField] GameObject summary; // Summary screen object
     public Animator anim;
 
     public bool canSpawnPigeon = false;
@@ -66,12 +66,12 @@ public class UIController : MonoBehaviour
             CheckHighScore();
         }
 
-        if(subscriber >= 25)
+        if (subscriber >= 25)
         {
             canSpawnSewer = true;
         }
 
-        if(subscriber == 50)
+        if (subscriber == 50)
         {
             subscriber += 10;
         }
@@ -80,7 +80,7 @@ public class UIController : MonoBehaviour
             canSpawnPigeon = true;
         }
 
-        if(subscriber >= 300)
+        if (subscriber >= 300)
         {
             canDoTricks = true;
         }
@@ -162,7 +162,6 @@ public class UIController : MonoBehaviour
         }
     }
 
-
     public void GainSubscribers(int amount)
     {
         subscriber += amount;
@@ -202,5 +201,12 @@ public class UIController : MonoBehaviour
         summary.SetActive(true);
         anim.Play("SummaryScreen");
         subscriberGainedText.text = $"+ {sessionSubscribers}";
+        player.SetControlsEnabled(false); 
+    }
+
+    public void CloseSummary()
+    {
+        summary.SetActive(false);
+        player.SetControlsEnabled(true); 
     }
 }

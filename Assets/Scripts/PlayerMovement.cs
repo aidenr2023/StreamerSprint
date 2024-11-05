@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
-
 {
     public float gravity;
     public Vector2 velocity;
@@ -25,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpGroundThreshold = 0.5f;
 
     public bool isDead = false;
+    public bool controlsEnabled = true; // New variable to manage controls
 
     public TextMeshProUGUI trickText;
     public TextMeshProUGUI obstacleText;
@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
     private float minSwipeDistance = 50f;
-
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +53,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Only process input if controls are enabled
+        if (!controlsEnabled) return;
+
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
@@ -82,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
                 Jump();
             }
         }
-        
 
         if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
         {
@@ -133,9 +134,7 @@ public class PlayerMovement : MonoBehaviour
                 trickText.gameObject.SetActive(false);
             }
         }
-        
     }
-
 
     private void Jump()
     {
@@ -145,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
         holdJumpTimer = 0;
         audioManager.PlaySFX(audioManager.Jump);
     }
+
     private void HandleTouch(Vector2 start, Vector2 end)
     {
         Vector2 swipeDirection = end - start;
@@ -157,9 +157,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
-            }
-            else if(!isGrounded && uiController != null && uiController.canDoTricks)
-            {
+        }
+        else if (!isGrounded && uiController != null && uiController.canDoTricks)
+        {
             // It's a swipe, determine direction
             swipeDirection.Normalize();  // Normalize to get just the direction
 
@@ -211,15 +211,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (!isGrounded)
         {
-            if(isHoldingJump)
+            if (isHoldingJump)
             {
                 holdJumpTimer += Time.fixedDeltaTime;
-                if(holdJumpTimer >= maxHoldJumpTime)
+                if (holdJumpTimer >= maxHoldJumpTime)
                 {
                     isHoldingJump = false;
                 }
             }
-
 
             pos.y += velocity.y * Time.fixedDeltaTime;
             if (!isHoldingJump)
@@ -231,18 +230,18 @@ public class PlayerMovement : MonoBehaviour
             Vector2 rayDirection = Vector2.up;
             float rayDistance = velocity.y * Time.fixedDeltaTime;
             RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance, groundLayerMask);
-            if(hit2D.collider != null)
+            if (hit2D.collider != null)
             {
                 Ground ground = hit2D.collider.GetComponent<Ground>();
-                if (ground != null) 
+                if (ground != null)
                 {
-                    if (pos.y >= ground.groundHeight){
-                    groundHeight = ground.groundHeight;
-                    pos.y = groundHeight;
-                    isGrounded = true;
+                    if (pos.y >= ground.groundHeight)
+                    {
+                        groundHeight = ground.groundHeight;
+                        pos.y = groundHeight;
+                        isGrounded = true;
                     }
                 }
-
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.red);
 
@@ -263,7 +262,7 @@ public class PlayerMovement : MonoBehaviour
 
         distance += velocity.x * Time.fixedDeltaTime;
 
-        if(isGrounded)
+        if (isGrounded)
         {
             float velocityRatio = velocity.x / maxXVelocity;
             acceleration = maxAcceleration * (1 - velocityRatio);
@@ -281,7 +280,6 @@ public class PlayerMovement : MonoBehaviour
             RaycastHit2D hit2D = Physics2D.Raycast(rayOrigin, rayDirection, rayDistance);
             if (hit2D.collider == null)
             {
-
                 isGrounded = false;
             }
             Debug.DrawRay(rayOrigin, rayDirection * rayDistance, Color.yellow);
@@ -292,12 +290,11 @@ public class PlayerMovement : MonoBehaviour
         if (obstHitX.collider != null)
         {
             Obstacle obstacle = obstHitX.collider.GetComponent<Obstacle>();
-            if (obstacle !=null)
+            if (obstacle != null)
             {
                 hitObstacle(obstacle);
             }
         }
-
 
         transform.position = pos;
     }
@@ -309,8 +306,6 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(HideObstacleText());
         obstacleText.gameObject.SetActive(true);
         audioManager.PlaySFX(audioManager.obstacleHit);
-
-
     }
 
     IEnumerator HideObstacleText()
@@ -318,7 +313,10 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         obstacleText.gameObject.SetActive(false);
     }
-    
 
-   
+    // Function to enable or disable player controls
+    public void SetControlsEnabled(bool enabled)
+    {
+        controlsEnabled = enabled;
+    }
 }
