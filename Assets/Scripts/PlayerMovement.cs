@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask obstacleLayerMask;
     public Animator anim;
     public UIController uiController;
+    public AudioManager audioManager;
 
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
@@ -101,24 +102,28 @@ public class PlayerMovement : MonoBehaviour
                 {
                     PerformTrick("+1", "D");
                     anim.SetTrigger("Trick2");
+                    audioManager.PlaySFX(audioManager.Trick);
                 }
 
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     PerformTrick("+1", "A");
                     anim.SetTrigger("Trick2");
+                    audioManager.PlaySFX(audioManager.Trick);
                 }
 
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     PerformTrick("+1", "W");
                     anim.SetTrigger("Trick");
+                    audioManager.PlaySFX(audioManager.Trick);
                 }
 
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     PerformTrick("+1", "S");
                     anim.SetTrigger("Trick");
+                    audioManager.PlaySFX(audioManager.Trick);
                 }
             }
 
@@ -138,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.y = jumpVelocity;
         isHoldingJump = true;
         holdJumpTimer = 0;
+        audioManager.PlaySFX(audioManager.Jump);
     }
     private void HandleTouch(Vector2 start, Vector2 end)
     {
@@ -302,6 +308,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.x *= 0.7f;
         StartCoroutine(HideObstacleText());
         obstacleText.gameObject.SetActive(true);
+        audioManager.PlaySFX(audioManager.obstacleHit);
 
 
     }
