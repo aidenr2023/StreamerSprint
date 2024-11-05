@@ -93,34 +93,42 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleTrickInput()
     {
-        if (!isGrounded)
+        if (uiController != null && uiController.canDoTricks)
         {
-            if (Input.GetKeyDown(KeyCode.D))
+            if (!isGrounded)
             {
-                PerformTrick("+1", "D");
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    PerformTrick("+1", "D");
+                    anim.SetTrigger("Trick2");
+                }
+
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    PerformTrick("+1", "A");
+                    anim.SetTrigger("Trick2");
+                }
+
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    PerformTrick("+1", "W");
+                    anim.SetTrigger("Trick");
+                }
+
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    PerformTrick("+1", "S");
+                    anim.SetTrigger("Trick");
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.A))
+            // Deactivate trick text when keys are released
+            if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
             {
-                PerformTrick("+1", "A");
-            }
-
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                PerformTrick("+1", "W");
-            }
-
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                PerformTrick("+1", "S");
+                trickText.gameObject.SetActive(false);
             }
         }
-
-        // Deactivate trick text when keys are released
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
-        {
-            trickText.gameObject.SetActive(false);
-        }
+        
     }
 
 
@@ -143,27 +151,31 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
-        }
-        else if(!isGrounded)
-        {
+            }
+            else if(!isGrounded && uiController != null && uiController.canDoTricks)
+            {
             // It's a swipe, determine direction
             swipeDirection.Normalize();  // Normalize to get just the direction
 
             if (Vector2.Dot(swipeDirection, Vector2.up) > 0.7f)
             {
                 PerformTrick("+1", "W");
+                anim.SetTrigger("Trick");
             }
             else if (Vector2.Dot(swipeDirection, Vector2.down) > 0.7f)
             {
                 PerformTrick("+1", "S");
+                anim.SetTrigger("Trick");
             }
             else if (Vector2.Dot(swipeDirection, Vector2.left) > 0.7f)
             {
                 PerformTrick("+1", "A");
+                anim.SetTrigger("Trick2");
             }
             else if (Vector2.Dot(swipeDirection, Vector2.right) > 0.7f)
             {
                 PerformTrick("+1", "D");
+                anim.SetTrigger("Trick2");
             }
         }
     }
@@ -172,7 +184,6 @@ public class PlayerMovement : MonoBehaviour
     {
         trickText.gameObject.SetActive(true);
         trickText.text = trickName;
-        anim.SetTrigger("Trick");
         uiController.GainSubscribers(1); // Gain subscribers for tricks
         Debug.Log($"{trickName} Performed - Simulating {key} key press");
     }

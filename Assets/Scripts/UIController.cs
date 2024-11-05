@@ -16,7 +16,10 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject summary;
     public Animator anim;
 
-    public bool CanSpawnPigeon = false;
+    public bool canSpawnPigeon = false;
+    public bool canSpawnSewer = false;
+    public bool canDoTricks;
+
     GameObject results;
     int distance;
     public int subscriber;
@@ -54,9 +57,24 @@ public class UIController : MonoBehaviour
         {
             Summary();
         }
-        if (subscriber >= 100)
+
+        if(subscriber >= 25)
         {
-            CanSpawnPigeon = true;
+            canSpawnSewer = true;
+        }
+
+        if(subscriber == 50)
+        {
+            subscriber += 10;
+        }
+        if (subscriber >= 150)
+        {
+            canSpawnPigeon = true;
+        }
+
+        if(subscriber >= 300)
+        {
+            canDoTricks = true;
         }
     }
 

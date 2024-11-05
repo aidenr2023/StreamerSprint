@@ -129,7 +129,7 @@ public class Ground : MonoBehaviour
          Obstacle chosenTemplate;
             
             // Choose the template based on the sewer count
-            if (!sewerGenerated && Random.Range(0, 2) == 0)
+            if (uiController != null && uiController.canSpawnSewer && !sewerGenerated && Random.Range(0, 2) == 0)
             {
                 chosenTemplate = sewerTemplate;
                 sewerGenerated = true; // Increment if a sewer is chosen
@@ -156,7 +156,7 @@ public class Ground : MonoBehaviour
         }
 
         // Generate sky obstacle
-        if (uiController != null && uiController.CanSpawnPigeon)
+        if (uiController != null && uiController.canSpawnPigeon)
         {
             if (skyObstacleTemplate != null && Random.value < skyObstacleSpawnChance)
             {
