@@ -1604,6 +1604,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80c883c6d661044438c5c8869a728668, type: 3}
   - {fileID: 21300000, guid: a52c19b1b1ee05b47901a1a5acadbc02, type: 3}
   - {fileID: 21300000, guid: d1dcbcbb1f632664d8a61f36254c56d0, type: 3}
+  - {fileID: 21300000, guid: 1f488b604396d9e4ea1a4cfae3d4ae0e, type: 3}
 --- !u!212 &581721184
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2261,6 +2262,7 @@ MonoBehaviour:
   holdJumpTimer: 0
   jumpGroundThreshold: 3
   isDead: 0
+  controlsEnabled: 1
   trickText: {fileID: 546128503}
   obstacleText: {fileID: 879974127}
   groundLayerMask:
@@ -2657,6 +2659,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 80c883c6d661044438c5c8869a728668, type: 3}
   - {fileID: 21300000, guid: a52c19b1b1ee05b47901a1a5acadbc02, type: 3}
   - {fileID: 21300000, guid: d1dcbcbb1f632664d8a61f36254c56d0, type: 3}
+  - {fileID: 21300000, guid: 1f488b604396d9e4ea1a4cfae3d4ae0e, type: 3}
 --- !u!1 &901509100
 GameObject:
   m_ObjectHideFlags: 0
