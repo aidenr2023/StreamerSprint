@@ -20,6 +20,7 @@ public class PlayerMovement1 : MonoBehaviour
     public float maxHoldJumpTime = 0.4f;
     public float maxFRHoldTime = 0.4f;
     public float holdJumpTimer = 0.0f;
+    public BirdCount bird;
 
     public float jumpGroundThreshold = 0.5f;
 
@@ -301,8 +302,8 @@ public class PlayerMovement1 : MonoBehaviour
 
     void hitObstacle(Obstacle1 obstacle)
     {
+        bird.birdCount++;
         Destroy(obstacle.gameObject);
-        velocity.x *= 0.7f;
         StartCoroutine(HideObstacleText());
         obstacleText.gameObject.SetActive(true);
         audioManager.PlaySFX(audioManager.obstacleHit);

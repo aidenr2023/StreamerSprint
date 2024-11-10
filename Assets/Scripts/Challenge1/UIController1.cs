@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; // For checking the current scene
 using System.Collections.Generic;
 
 public class UIController1 : MonoBehaviour
@@ -9,7 +9,6 @@ public class UIController1 : MonoBehaviour
     PlayerMovement1 player;
     [SerializeField] TextMeshProUGUI subscriberText;
     [SerializeField] TextMeshProUGUI subscriberGainedText;
-    [SerializeField] GameObject win;
     [SerializeField] GameObject lose;
     public Animator anim;
 
@@ -23,15 +22,21 @@ public class UIController1 : MonoBehaviour
     int lastReportedSubscriberCount;
     int sessionSubscribers;
 
-
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement1>();
-        win.SetActive(false);
         lose.SetActive(false);
 
         sessionSubscribers = 0;
         LoadSubscriber();
+
+        // Check the current scene and unlock features accordingly
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "Level 1")  // Replace "MySpecialScene" with the scene name you want to target
+        {
+            UnlockAllFeatures(); // Unlock all features for this specific scene
+        }
     }
 
     void Update()
@@ -39,25 +44,6 @@ public class UIController1 : MonoBehaviour
         if (player.isDead)
         {
             Lose();  
-        }
-
-        if (subscriber >= 25)
-        {
-            canSpawnSewer = true;
-        }
-
-        if (subscriber == 50)
-        {
-            subscriber += 10;
-        }
-        if (subscriber >= 150)
-        {
-            canSpawnPigeon = true;
-        }
-
-        if (subscriber >= 300)
-        {
-            canDoTricks = true;
         }
     }
 
@@ -82,8 +68,6 @@ public class UIController1 : MonoBehaviour
 
             UpdateSubscriberText();
             subscriberGainedText.text = $"+ {sessionSubscribers}";
-
-            
         }
     }
 
@@ -91,8 +75,6 @@ public class UIController1 : MonoBehaviour
     {
         subscriberText.text = $"Subscribers: {subscriber}";
     }
-
-    
 
     public void GainSubscribers(int amount)
     {
@@ -103,7 +85,6 @@ public class UIController1 : MonoBehaviour
 
         UpdateSubscriberText();
         subscriberGainedText.text = $"+ {sessionSubscribers}";
-
     }
 
     void LoadSubscriber()
@@ -112,7 +93,6 @@ public class UIController1 : MonoBehaviour
         UpdateSubscriberText();
     }
 
-
     void Lose()
     {  
         lose.SetActive(true);
@@ -120,4 +100,13 @@ public class UIController1 : MonoBehaviour
         player.SetControlsEnabled(false);
     }
 
+    // New method to unlock features in the specified scene
+    void UnlockAllFeatures()
+    {
+        canSpawnSewer = true;
+        canSpawnPigeon = true;
+        canDoTricks = true;
+
+       
+    }
 }

@@ -54,6 +54,15 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "Challenge1")
+        {
+        canSpawnSewer = true;
+        canSpawnPigeon = true;
+        canDoTricks = true; 
+        }
+        
         distance = Mathf.FloorToInt(player.distance);
         distanceText.text = distance + " Views";
 
