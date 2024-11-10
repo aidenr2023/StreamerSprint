@@ -7,15 +7,10 @@ using System.Collections.Generic;
 public class UIController1 : MonoBehaviour
 {
     PlayerMovement1 player;
-    Text distanceText;
-    [SerializeField] TextMeshProUGUI highScoreText;
     [SerializeField] TextMeshProUGUI subscriberText;
     [SerializeField] TextMeshProUGUI subscriberGainedText;
-    [SerializeField] TextMeshProUGUI milestoneProgressText;
-    [SerializeField] private Sprite[] milestoneSprites;
-    [SerializeField] private Image milestoneImage;
-    [SerializeField] Slider milestoneSlider;
-    [SerializeField] GameObject summary; // Summary screen object
+    [SerializeField] GameObject win;
+    [SerializeField] GameObject lose;
     public Animator anim;
 
     public bool canSpawnPigeon = false;
@@ -28,38 +23,22 @@ public class UIController1 : MonoBehaviour
     int lastReportedSubscriberCount;
     int sessionSubscribers;
 
-    [SerializeField] private int[] milestoneThresholds = { 100, 250, 500, 1000 };
-    private int nextMilestoneIndex = 0;
-
-    [SerializeField] private string[] milestoneRewards = { "Milestone 1", "Bonus Subscribers", "Milestone 2", "Milestone 3" };
 
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement1>();
-        distanceText = GameObject.Find("DistanceText").GetComponent<Text>();
-
-        summary.SetActive(false);
+        win.SetActive(false);
+        lose.SetActive(false);
 
         sessionSubscribers = 0;
-        UpdateHighScoreText();
         LoadSubscriber();
-        UpdateMilestoneProgress();
-        UpdateMilestoneImage();
-        CheckMilestones();
     }
 
     void Update()
     {
-        distance = Mathf.FloorToInt(player.distance);
-        distanceText.text = distance + " Views";
-
         if (player.isDead)
         {
-            Summary();
-        }
-        else
-        {
-            CheckHighScore();
+            Lose();  
         }
 
         if (subscriber >= 25)
@@ -84,7 +63,6 @@ public class UIController1 : MonoBehaviour
 
     void FixedUpdate()
     {
-        CheckHighScore();
         UpdateSubscriber();
     }
 
@@ -105,7 +83,7 @@ public class UIController1 : MonoBehaviour
             UpdateSubscriberText();
             subscriberGainedText.text = $"+ {sessionSubscribers}";
 
-            CheckMilestones();
+            
         }
     }
 
@@ -114,48 +92,7 @@ public class UIController1 : MonoBehaviour
         subscriberText.text = $"Subscribers: {subscriber}";
     }
 
-    void CheckMilestones()
-    {
-        while (nextMilestoneIndex < milestoneThresholds.Length && subscriber >= milestoneThresholds[nextMilestoneIndex])
-        {
-            Debug.Log($"Milestone reached: {milestoneThresholds[nextMilestoneIndex]} subscribers!");
-
-            nextMilestoneIndex++;
-        }
-        UpdateMilestoneProgress();
-    }
-
-    void UpdateMilestoneProgress()
-    {
-        if (nextMilestoneIndex < milestoneThresholds.Length)
-        {
-            int nextMilestone = milestoneThresholds[nextMilestoneIndex];
-            float progressPercentage = Mathf.Clamp01((float)subscriber / nextMilestone);
-
-            milestoneProgressText.text = $"Next Milestone: {subscriber}/{nextMilestone} ({progressPercentage * 100:F1}%)";
-            milestoneSlider.value = progressPercentage;
-            milestoneSlider.maxValue = 1f;
-            UpdateMilestoneImage();
-        }
-        else
-        {
-            milestoneProgressText.text = "All milestones reached!";
-            milestoneSlider.value = 1f;
-            milestoneImage.sprite = null;
-        }
-    }
-
-    void UpdateMilestoneImage()
-    {
-        if (nextMilestoneIndex < milestoneSprites.Length && milestoneSprites[nextMilestoneIndex] != null)
-        {
-            milestoneImage.sprite = milestoneSprites[nextMilestoneIndex];
-        }
-        else
-        {
-            milestoneImage.sprite = null;
-        }
-    }
+    
 
     public void GainSubscribers(int amount)
     {
@@ -167,7 +104,6 @@ public class UIController1 : MonoBehaviour
         UpdateSubscriberText();
         subscriberGainedText.text = $"+ {sessionSubscribers}";
 
-        CheckMilestones();
     }
 
     void LoadSubscriber()
@@ -176,33 +112,12 @@ public class UIController1 : MonoBehaviour
         UpdateSubscriberText();
     }
 
-    void CheckHighScore()
-    {
-        if (distance > PlayerPrefs.GetInt("HighScore", 0))
-        {
-            PlayerPrefs.SetInt("HighScore", distance);
-            PlayerPrefs.Save();
-            UpdateHighScoreText();
-        }
-    }
 
-    void UpdateHighScoreText()
-    {
-        highScoreText.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)} Views";
-    }
-
-    void Summary()
-    {
-        Time.timeScale = 0f;  // Stop the game by setting time scale to 0
-        summary.SetActive(true);
+    void Lose()
+    {  
+        lose.SetActive(true);
         subscriberGainedText.text = $"+ {sessionSubscribers}";
         player.SetControlsEnabled(false);
     }
 
-    public void CloseSummary()
-    {
-        Time.timeScale = 1f;  // Resume the game by setting time scale back to 1
-        summary.SetActive(false);
-        player.SetControlsEnabled(true);
-    }
 }

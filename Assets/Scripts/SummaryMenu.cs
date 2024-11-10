@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class SummaryMenu : MonoBehaviour
 {
-  public void Restart()
-  {
-    SceneManager.LoadScene("EndlessPath");
-  }
-
-  public void MainMenu()
-  {
-    SceneManager.LoadScene("Main Menu");
-  }
+    public void Restart()
+{
+    Time.timeScale = 1;  
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+}
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }

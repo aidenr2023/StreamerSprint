@@ -4,9 +4,8 @@ using TMPro;
 public class CountdownTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI countdownText;
-    [SerializeField] private GameObject summary;
-    [SerializeField] private Animator anim;
     [SerializeField] private TextMeshProUGUI subscriberGainedText;
+    [SerializeField] GameObject win;
 
     private PlayerMovement1 player;
     private float timeRemaining = 30f;
@@ -43,9 +42,10 @@ public class CountdownTimer : MonoBehaviour
                 isCountingDown = false;
 
                 Debug.Log("Countdown Complete!");
+                Time.timeScale = 0f;  
 
-                // Call Summary when time runs out
-                Summary();
+
+                Win();
             }
 
             // Update countdown text with seconds and milliseconds
@@ -64,18 +64,12 @@ public class CountdownTimer : MonoBehaviour
     public void StopCountdown()
     {
         isCountingDown = false;
-        Summary();
     }
 
     // Method to handle the summary screen when countdown is finished
-    void Summary()
+    void Win()
     {
-        summary.SetActive(true); // Activate the summary screen
-
-        if (anim != null)
-        {
-            anim.Play("SummaryScreen"); // Play the animation for the summary screen
-        }
+        win.SetActive(true); // Activate the summary screen
 
         if (subscriberGainedText != null)
         {
@@ -89,13 +83,5 @@ public class CountdownTimer : MonoBehaviour
     }
 
     // Method to close the summary screen (e.g., when the player presses a button to close)
-    public void CloseSummary()
-    {
-        summary.SetActive(false); // Hide the summary screen
-
-        if (player != null)
-        {
-            player.SetControlsEnabled(true); // Enable player controls again
-        }
-    }
+    
 }
