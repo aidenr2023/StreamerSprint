@@ -64,16 +64,22 @@ public class PlayerMovement1 : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            switch (touch.phase)
+            // Handle jump on tap immediately
+            if (touch.phase == TouchPhase.Began)
             {
-                case TouchPhase.Began:
-                    touchStartPos = touch.position;  // Store the starting position of the touch
-                    break;
-
-                case TouchPhase.Moved:
-                    touchEndPos = touch.position;  // Store the ending position of the touch
-                    HandleTouch(touchStartPos, touchEndPos);
-                    break;
+                if (isGrounded)
+                {
+                    Jump();  // Trigger the jump as soon as touch starts
+                }
+                else
+                {
+                    touchStartPos = touch.position;  // Store for potential trick detection if in-air
+                }
+            }
+            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Ended)
+            {
+                touchEndPos = touch.position;
+                HandleTouch(touchStartPos, touchEndPos);  // Handle trick input on swipe
             }
         }
 
