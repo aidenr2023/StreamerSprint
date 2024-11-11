@@ -3371,7 +3371,6 @@ MonoBehaviour:
   milestoneImage: {fileID: 1348425347}
   milestoneSlider: {fileID: 1340632106}
   summary: {fileID: 1538572644}
-  anim: {fileID: 1538572647}
   canSpawnPigeon: 0
   canSpawnSewer: 0
   canDoTricks: 0
@@ -4530,7 +4529,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1538572645}
   - component: {fileID: 1538572646}
-  - component: {fileID: 1538572647}
   m_Layer: 5
   m_Name: Summary Screen
   m_TagString: Untagged
@@ -4572,27 +4570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0894d8f61cafa4e50b184ff5445e345c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &1538572647
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538572644}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5bbf32070864644139cba6487325b309, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1543069644
 GameObject:
   m_ObjectHideFlags: 0

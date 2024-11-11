@@ -16,7 +16,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image milestoneImage;
     [SerializeField] Slider milestoneSlider;
     [SerializeField] GameObject summary; // Summary screen object
-    public Animator anim;
+    
 
     public bool canSpawnPigeon = false;
     public bool canSpawnSewer = false;
@@ -69,6 +69,7 @@ public class UIController : MonoBehaviour
         if (player.isDead)
         {
             Summary();
+            Time.timeScale = 0;
         }
         else
         {
@@ -208,7 +209,6 @@ public class UIController : MonoBehaviour
     void Summary()
     {
         summary.SetActive(true);
-        anim.Play("SummaryScreen");
         subscriberGainedText.text = $"+ {sessionSubscribers}";
         player.SetControlsEnabled(false); 
     }

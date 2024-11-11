@@ -5,7 +5,7 @@ public class CountdownTimer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI countdownText;
     [SerializeField] private TextMeshProUGUI subscriberGainedText;
-    [SerializeField] GameObject win;
+    [SerializeField] GameObject lose;
 
     private PlayerMovement1 player;
     private float timeRemaining = 30f;
@@ -45,7 +45,7 @@ public class CountdownTimer : MonoBehaviour
                 Time.timeScale = 0f;  
 
 
-                Win();
+                Lose();
             }
 
             // Update countdown text with seconds and milliseconds
@@ -66,10 +66,10 @@ public class CountdownTimer : MonoBehaviour
         isCountingDown = false;
     }
 
-    // Method to handle the summary screen when countdown is finished
-    void Win()
+    
+    void Lose()
     {
-        win.SetActive(true); // Activate the summary screen
+        lose.SetActive(true); 
 
         if (subscriberGainedText != null)
         {
@@ -82,6 +82,6 @@ public class CountdownTimer : MonoBehaviour
         }
     }
 
-    // Method to close the summary screen (e.g., when the player presses a button to close)
+    
     
 }

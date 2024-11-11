@@ -28,7 +28,7 @@ public class BirdCount : MonoBehaviour
         if (birdCount == 10)
         {
             win.SetActive(true);
-             
+            Time.timeScale = 0;
         }
     }
 }

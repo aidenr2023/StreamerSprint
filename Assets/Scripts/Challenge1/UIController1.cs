@@ -33,7 +33,7 @@ public class UIController1 : MonoBehaviour
         // Check the current scene and unlock features accordingly
         string currentScene = SceneManager.GetActiveScene().name;
 
-        if (currentScene == "Level 1")  // Replace "MySpecialScene" with the scene name you want to target
+        if (currentScene == "Level 1")  
         {
             UnlockAllFeatures(); // Unlock all features for this specific scene
         }
@@ -43,7 +43,7 @@ public class UIController1 : MonoBehaviour
     {
         if (player.isDead)
         {
-            Lose();  
+            Lose();
         }
     }
 
@@ -98,6 +98,7 @@ public class UIController1 : MonoBehaviour
         lose.SetActive(true);
         subscriberGainedText.text = $"+ {sessionSubscribers}";
         player.SetControlsEnabled(false);
+        Time.timeScale = 0;
     }
 
     // New method to unlock features in the specified scene

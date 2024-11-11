@@ -996,7 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdownText: {fileID: 467790453}
   subscriberGainedText: {fileID: 1763056280}
-  win: {fileID: 199738868}
+  lose: {fileID: 1538572644}
 --- !u!1 &254449235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,7 +2709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravity: -300
   velocity: {x: 0, y: 0}
-  maxXVelocity: 100
+  maxXVelocity: 50
   maxAcceleration: 10
   acceleration: 10
   distance: 0
