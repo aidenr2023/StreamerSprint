@@ -7,7 +7,14 @@ public class BirdCount : MonoBehaviour
 {
     public int birdCount;
     public TextMeshProUGUI birdText;
-    public GameObject win; 
+    public GameObject win;
+    [SerializeField] TextMeshProUGUI subscriberText;
+    [SerializeField] TextMeshProUGUI subscriberGainedText;
+    public int subscriber;
+    int lastReportedSubscriberCount;
+    int sessionSubscribers;
+    PlayerMovement1 player;
+     
 
     
     void Start()
@@ -29,6 +36,7 @@ public class BirdCount : MonoBehaviour
         {
             win.SetActive(true);
             Time.timeScale = 0;
+            subscriberGainedText.text = $"+ {sessionSubscribers}";
         }
     }
 }

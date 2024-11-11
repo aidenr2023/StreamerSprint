@@ -4311,6 +4311,9 @@ MonoBehaviour:
   birdCount: 0
   birdText: {fileID: 1686345969}
   win: {fileID: 199738868}
+  subscriberText: {fileID: 1552742325}
+  subscriberGainedText: {fileID: 1763056280}
+  subscriber: 0
 --- !u!4 &1453235393
 Transform:
   m_ObjectHideFlags: 0
