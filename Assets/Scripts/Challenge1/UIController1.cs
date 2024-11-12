@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement; // For checking the current scene
+using UnityEngine.SceneManagement; 
 using System.Collections.Generic;
 
 public class UIController1 : MonoBehaviour
@@ -19,8 +19,8 @@ public class UIController1 : MonoBehaviour
     GameObject results;
     int distance;
     public int subscriber;
-    int lastReportedSubscriberCount;
-    int sessionSubscribers;
+    public int lastReportedSubscriberCount;
+    public int sessionSubscribers;
 
     private void Awake()
     {

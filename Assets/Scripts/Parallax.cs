@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Parallax : MonoBehaviour
@@ -11,7 +9,11 @@ public class Parallax : MonoBehaviour
     public Sprite[] sprites; // Array to hold the sprites
     private SpriteRenderer spriteRenderer; // Reference to the SpriteRenderer
 
-    private void Awake()
+    private float backgroundWidth; // Holds the background's width
+    private Vector2 resetPosition; // To store the reset position for the background
+    private Vector2 initialPosition; // Stores the initial starting position for smooth transition
+
+    void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component
@@ -19,24 +21,38 @@ public class Parallax : MonoBehaviour
 
     void Start()
     {
+        // Set the background width based on the sprite size
+        backgroundWidth = spriteRenderer.bounds.size.x;
+
+        // Initialize positions
+        initialPosition = transform.position;  // Set the initial position of the background
+        resetPosition = new Vector2(backgroundWidth, initialPosition.y);  // Reset position for the background
+
         // Initial randomization of the sprite
         RandomizeSprite();
     }
 
     void FixedUpdate()
     {
+        // Calculate the velocity of the background based on player's movement and depth
         float realVelocity = player.velocity.x / depth;
+
+        // Get the current position of the background
         Vector2 pos = transform.position;
 
+        // Move the background based on velocity
         pos.x -= realVelocity * Time.fixedDeltaTime;
 
-        // Check if the position is out of bounds and reset if necessary
-        if (pos.x <= -25)
+        // Reset the background position when it goes off-screen
+        if (pos.x <= -backgroundWidth)  // Reset when the background is completely off-screen
         {
-            pos.x = 80; // Reset the position
-            RandomizeSprite(); // Randomize the sprite when resetting
+            pos.x = resetPosition.x;  // Reset to the new position
+
+            // Randomize the sprite after resetting
+            RandomizeSprite();
         }
 
+        // Apply the new position to the background
         transform.position = pos;
     }
 
