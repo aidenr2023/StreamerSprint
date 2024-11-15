@@ -2944,7 +2944,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0}
   maxXVelocity: 50
   maxAcceleration: 10
-  acceleration: 10
+  acceleration: 7
   distance: 0
   groundHeight: 10
   jumpVelocity: 50
