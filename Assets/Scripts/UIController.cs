@@ -16,7 +16,11 @@ public class UIController : MonoBehaviour
     [SerializeField] private Image milestoneImage;
     [SerializeField] Slider milestoneSlider;
     [SerializeField] GameObject summary; // Summary screen object
-    
+    [SerializeField] GameObject milestone1;
+    [SerializeField] GameObject milestone2;
+    [SerializeField] GameObject milestone3;
+    [SerializeField] GameObject milestone4;
+
 
     public bool canSpawnPigeon = false;
     public bool canSpawnSewer = false;
@@ -31,6 +35,7 @@ public class UIController : MonoBehaviour
     // Milestone fields
     [SerializeField] private int[] milestoneThresholds = { 100, 250, 500, 1000 };
     private int nextMilestoneIndex = 0;
+    private HashSet<int> shownMilestones = new HashSet<int>();
 
     // Rewards
     [SerializeField] private string[] milestoneRewards = { "Milestone 1", "Bonus Subscribers", "Milestone 2", "Milestone 3" };
@@ -227,7 +232,37 @@ public class UIController : MonoBehaviour
         {
             subscriberGainedText.text = $" + {sessionSubscribers}";
         }
-        player.SetControlsEnabled(false); 
+
+        // Check each milestone and show it only if it hasn't been shown this session
+        if (subscriber > 25 && !shownMilestones.Contains(25))
+        {
+            milestone1.SetActive(true);
+            shownMilestones.Add(25);
+            summary.SetActive(false);
+        }
+
+        if (subscriber > 50 && !shownMilestones.Contains(50))
+        {
+            milestone2.SetActive(true);
+            shownMilestones.Add(50);
+            summary.SetActive(false);
+        }
+
+        if (subscriber > 150 && !shownMilestones.Contains(150))
+        {
+            milestone3.SetActive(true);
+            shownMilestones.Add(150);
+            summary.SetActive(false);
+        }
+
+        if (subscriber > 300 && !shownMilestones.Contains(300))
+        {
+            milestone4.SetActive(true);
+            shownMilestones.Add(300);
+            summary.SetActive(false);
+        }
+
+        player.SetControlsEnabled(false);
     }
 
     public void CloseSummary()
