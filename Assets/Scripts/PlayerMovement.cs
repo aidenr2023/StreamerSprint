@@ -88,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
+                
             }
         }
 
