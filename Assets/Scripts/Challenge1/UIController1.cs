@@ -87,6 +87,17 @@ public class UIController1 : MonoBehaviour
         subscriberGainedText.text = $"+ {sessionSubscribers}";
     }
 
+    public void LoseSubscribers(int amount)
+    {
+        subscriber -= amount;
+        sessionSubscribers -= amount;
+        PlayerPrefs.SetInt("Subscribers", subscriber);
+        PlayerPrefs.Save();
+
+        UpdateSubscriberText();
+        subscriberGainedText.text = $"+ {sessionSubscribers}";
+    }
+
     void LoadSubscriber()
     {
         subscriber = PlayerPrefs.GetInt("Subscribers", 0);

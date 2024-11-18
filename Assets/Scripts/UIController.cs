@@ -184,6 +184,16 @@ public class UIController : MonoBehaviour
 
         CheckMilestones();
     }
+    public void LoseSubscribers(int amount)
+    {
+        subscriber -= amount;
+        sessionSubscribers -= amount;
+        PlayerPrefs.SetInt("Subscribers", subscriber);
+        PlayerPrefs.Save();
+
+        UpdateSubscriberText();
+        subscriberGainedText.text = $" {sessionSubscribers}";
+    }
 
     void LoadSubscriber()
     {
@@ -209,7 +219,14 @@ public class UIController : MonoBehaviour
     void Summary()
     {
         summary.SetActive(true);
-        subscriberGainedText.text = $"+ {sessionSubscribers}";
+        if (sessionSubscribers < 0)
+        {
+            subscriberGainedText.text = $" {sessionSubscribers}";
+        }
+        else
+        {
+            subscriberGainedText.text = $" + {sessionSubscribers}";
+        }
         player.SetControlsEnabled(false); 
     }
 
