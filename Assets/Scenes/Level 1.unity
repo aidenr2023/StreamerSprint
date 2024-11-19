@@ -1576,7 +1576,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.764151, g: 0.09732112, b: 0.09732112, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2515,7 +2515,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 604.1689, y: 80}
+  m_SizeDelta: {x: 790.0775, y: 123.3786}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &745414554
 MonoBehaviour:
@@ -2537,7 +2537,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Collect 5 Birds to Win!
+  m_text: Collect 5 Birds Under the Time Limit to Win!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 27e1b49e03bd9274fb2e5f99b084546c, type: 2}
   m_sharedMaterial: {fileID: -9078110837853005069, guid: 27e1b49e03bd9274fb2e5f99b084546c, type: 2}
