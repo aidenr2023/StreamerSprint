@@ -283,7 +283,14 @@ public class UIController : MonoBehaviour
             isMilestonePopupActive = true;
             return;
         }
-
+         if(sessionSubscribers < 0)
+        {
+            subscriberGainedText.text = $" {sessionSubscribers}";
+        }
+         else
+        {
+            subscriberGainedText.text = $" + {sessionSubscribers}";
+        }
         summary.SetActive(true);
         player.SetControlsEnabled(false);
     }
