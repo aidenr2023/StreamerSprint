@@ -351,10 +351,7 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("Bubble is already active. Button press ignored.");
             }
         }
-        else
-        {
-            bubbleButtonGO.SetActive(false);
-        }
+        
         
 
     }
