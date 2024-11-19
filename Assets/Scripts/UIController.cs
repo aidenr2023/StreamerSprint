@@ -20,6 +20,7 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject milestone2;
     [SerializeField] GameObject milestone3;
     [SerializeField] GameObject milestone4;
+    [SerializeField] GameObject milestone5;
 
 
     public bool canSpawnPigeon = false;
@@ -254,7 +255,7 @@ public class UIController : MonoBehaviour
         // Check each milestone and show it only if it hasn't been shown this session.
         if (subscriber > 25 && !shownMilestones.Contains(25))
         {
-            milestone1.SetActive(true);
+            milestone4.SetActive(true);
             shownMilestones.Add(25);
             PlayerPrefs.SetInt("Milestone_25", 1); // Save milestone as shown
             PlayerPrefs.Save();
@@ -276,7 +277,7 @@ public class UIController : MonoBehaviour
 
         if (subscriber > 150 && !shownMilestones.Contains(150))
         {
-            milestone3.SetActive(true);
+            milestone1.SetActive(true);
             shownMilestones.Add(150);
             PlayerPrefs.SetInt("Milestone_150", 1);
             PlayerPrefs.Save();
@@ -285,9 +286,9 @@ public class UIController : MonoBehaviour
             return;
         }
 
-        if (subscriber > 300 && !shownMilestones.Contains(300))
+        if (subscriber > 200 && !shownMilestones.Contains(200))
         {
-            milestone4.SetActive(true);
+            milestone2.SetActive(true);
             shownMilestones.Add(300);
             PlayerPrefs.SetInt("Milestone_300", 1);
             PlayerPrefs.Save();
@@ -295,7 +296,32 @@ public class UIController : MonoBehaviour
             isMilestonePopupActive = true;
             return;
         }
-         if(sessionSubscribers < 0)
+
+        if (subscriber > 350 && !shownMilestones.Contains(350))
+        {
+            milestone5.SetActive(true);
+            shownMilestones.Add(300);
+            PlayerPrefs.SetInt("Milestone_300", 1);
+            PlayerPrefs.Save();
+            summary.SetActive(false);
+            isMilestonePopupActive = true;
+            return;
+        }
+
+        if (subscriber > 500 && !shownMilestones.Contains(500))
+        {
+            milestone3.SetActive(true);
+            shownMilestones.Add(300);
+            PlayerPrefs.SetInt("Milestone_300", 1);
+            PlayerPrefs.Save();
+            summary.SetActive(false);
+            isMilestonePopupActive = true;
+            return;
+        }
+
+
+
+        if (sessionSubscribers < 0)
         {
             subscriberGainedText.text = $" {sessionSubscribers}";
         }
