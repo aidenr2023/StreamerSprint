@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isBubbleActive = false;
     private bool isBubbleOnCooldown = false;
     public Button bubbleButton;
+    public GameObject bubbleButtonGO;
 
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0.4f;
@@ -53,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Debug.LogError("UIController not found. Make sure the object is named correctly and the script is attached.");
         }
+
+        bubbleButtonGO.SetActive(false);
     }
 
     // Update is called once per frame
@@ -333,17 +336,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActivateBubble()
     {
-        if (!isBubbleActive)
+        if (uiController.canUseBubble)
         {
-            bubble.SetActive(true); // Ensure the bubble GameObject is active
-            isBubbleActive = true; // Set the flag
-            StartCoroutine(TurnOffBubble());
-            StartCoroutine(StartBubbleCooldown());
+            bubbleButtonGO.SetActive(true);
+            if (!isBubbleActive)
+            {
+                bubble.SetActive(true); // Ensure the bubble GameObject is active
+                isBubbleActive = true; // Set the flag
+                StartCoroutine(TurnOffBubble());
+                StartCoroutine(StartBubbleCooldown());
+            }
+            else if (isBubbleOnCooldown)
+            {
+                Debug.Log("Bubble is already active. Button press ignored.");
+            }
         }
-        else if (isBubbleOnCooldown)
+        else
         {
-            Debug.Log("Bubble is already active. Button press ignored.");
+            bubbleButtonGO.SetActive(false);
         }
+        
 
     }
 

@@ -24,6 +24,7 @@ public class UIController : MonoBehaviour
 
     public bool canSpawnPigeon = false;
     public bool canSpawnSewer = false;
+    public bool canUseBubble = false;
     public bool canDoTricks;
     bool isMilestonePopupActive = false;
 
@@ -85,21 +86,32 @@ public class UIController : MonoBehaviour
 
         if (subscriber >= 25)
         {
-            canSpawnSewer = true;
+            canDoTricks = true;
         }
 
         if (subscriber == 50)
         {
-            subscriber += 10;
-        }
-        if (subscriber >= 150)
-        {
-            canSpawnPigeon = true;
+            subscriber += 50;
         }
 
-        if (subscriber >= 300)
+        if (subscriber >= 150)
         {
-            canDoTricks = true;
+            canSpawnSewer = true;
+        }
+
+        if (subscriber == 200)
+        {
+            subscriber += 50;
+        }
+
+        if (subscriber >= 350)
+        {
+            canUseBubble = true;
+        }
+
+        if (subscriber >= 500)
+        {
+            canSpawnPigeon = true;
         }
     }
 

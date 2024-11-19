@@ -2555,7 +2555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &579012456
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3503,6 +3503,7 @@ MonoBehaviour:
   jumpVelocity: 50
   isGrounded: 0
   bubbleButton: {fileID: 2026088512}
+  bubbleButtonGO: {fileID: 2026088510}
   isHoldingJump: 0
   maxHoldJumpTime: 0.4
   maxFRHoldTime: 0.4
@@ -4700,7 +4701,7 @@ MonoBehaviour:
   milestoneProgressText: {fileID: 163387866}
   milestoneSprites:
   - {fileID: -1388900323, guid: e1f128e750d6afb4b81a07337a2e086c, type: 3}
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 6596211ccc13000499bf41ab16368c92, type: 3}
   - {fileID: -969162280, guid: b1867fadede3a9f48b22440c88ed1b15, type: 3}
   - {fileID: 135013237, guid: b41ee01308399044db9d3621262df906, type: 3}
   milestoneImage: {fileID: 1348425347}
@@ -4712,6 +4713,7 @@ MonoBehaviour:
   milestone4: {fileID: 441737754}
   canSpawnPigeon: 0
   canSpawnSewer: 0
+  canUseBubble: 0
   canDoTricks: 0
   subscriber: 0
   milestoneThresholds: 1900000032000000960000002c010000
