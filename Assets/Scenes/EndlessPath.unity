@@ -3502,6 +3502,7 @@ MonoBehaviour:
   groundHeight: 10
   jumpVelocity: 50
   isGrounded: 0
+  bubbleButton: {fileID: 2026088512}
   isHoldingJump: 0
   maxHoldJumpTime: 0.4
   maxFRHoldTime: 0.4

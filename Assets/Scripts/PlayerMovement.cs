@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpVelocity = 20;
     public bool isGrounded = false;
     private bool isBubbleActive = false;
+    private bool isBubbleOnCooldown = false;
+    public Button bubbleButton;
 
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0.4f;
@@ -336,12 +338,24 @@ public class PlayerMovement : MonoBehaviour
             bubble.SetActive(true); // Ensure the bubble GameObject is active
             isBubbleActive = true; // Set the flag
             StartCoroutine(TurnOffBubble());
+            StartCoroutine(StartBubbleCooldown());
         }
-        else
+        else if (isBubbleOnCooldown)
         {
             Debug.Log("Bubble is already active. Button press ignored.");
         }
 
+    }
+
+    private IEnumerator StartBubbleCooldown()
+    {
+        isBubbleOnCooldown = true;
+        bubbleButton.interactable = false; // Disable the button
+        Debug.Log("Bubble cooldown started.");
+        yield return new WaitForSeconds(30f);
+        isBubbleOnCooldown = false;
+        bubbleButton.interactable = true; // Re-enable the button
+        Debug.Log("Bubble cooldown ended. Button is ready.");
     }
 
     IEnumerator HideObstacleText()
