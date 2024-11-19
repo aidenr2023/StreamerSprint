@@ -61,6 +61,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (uiController.canUseBubble)
+        {
+            bubbleButtonGO.SetActive(true);
+        }
         // Only process input if controls are enabled
         if (!controlsEnabled) return;
 
@@ -336,23 +341,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActivateBubble()
     {
-        if (uiController.canUseBubble)
+        bubbleButtonGO.SetActive(true);
+        if (!isBubbleActive)
         {
-            bubbleButtonGO.SetActive(true);
-            if (!isBubbleActive)
-            {
-                bubble.SetActive(true); // Ensure the bubble GameObject is active
-                isBubbleActive = true; // Set the flag
-                StartCoroutine(TurnOffBubble());
-                StartCoroutine(StartBubbleCooldown());
-            }
-            else if (isBubbleOnCooldown)
-            {
-                Debug.Log("Bubble is already active. Button press ignored.");
-            }
+            bubble.SetActive(true); // Ensure the bubble GameObject is active
+            isBubbleActive = true; // Set the flag
+            StartCoroutine(TurnOffBubble());
+            StartCoroutine(StartBubbleCooldown());
         }
-        
-        
+        else if (isBubbleOnCooldown)
+        {
+            Debug.Log("Bubble is already active. Button press ignored.");
+        }
 
     }
 
