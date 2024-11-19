@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundHeight = 10;
     public float jumpVelocity = 20;
     public bool isGrounded = false;
+    private bool isBubbleActive = false;
 
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0.4f;
@@ -34,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim;
     public UIController uiController;
     public AudioManager audioManager;
+
+    public GameObject bubble;
 
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
@@ -308,18 +311,42 @@ public class PlayerMovement : MonoBehaviour
 
     void hitObstacle(Obstacle obstacle)
     {
+
         Destroy(obstacle.gameObject);
-        velocity.x *= 0.7f;
-        StartCoroutine(HideObstacleText());
-        obstacleText.gameObject.SetActive(true);
-        audioManager.PlaySFX(audioManager.obstacleHit);
-        uiController.LoseSubscribers(1);
+
+        if (!isBubbleActive) // Check if the bubble is inactive
+        {
+            velocity.x *= 0.7f; // Reduce velocity
+            StartCoroutine(HideObstacleText());
+            obstacleText.gameObject.SetActive(true);
+            audioManager.PlaySFX(audioManager.obstacleHit);
+            uiController.LoseSubscribers(1); // Lose subscribers
+        }
+        else
+        {
+            Debug.Log("No Damage done");
+        }
+
+    }
+
+    public void ActivateBubble()
+    {
+        bubble.SetActive(true); // Ensure the bubble GameObject is active
+        isBubbleActive = true; // Set the flag
+        StartCoroutine(TurnOffBubble());
     }
 
     IEnumerator HideObstacleText()
     {
         yield return new WaitForSeconds(.5f);
         obstacleText.gameObject.SetActive(false);
+    }
+
+    IEnumerator TurnOffBubble()
+    {
+        yield return new WaitForSeconds(5f);
+        bubble.SetActive(false);
+        isBubbleActive = false;
     }
 
     // Function to enable or disable player controls
