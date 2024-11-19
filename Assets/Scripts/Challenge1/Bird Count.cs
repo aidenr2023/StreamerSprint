@@ -23,13 +23,21 @@ public class BirdCount : MonoBehaviour
 
     void CheckWinCondition()
     {
-        if (birdCount >= 5) // Trigger win condition when bird count reaches 10
+        if (birdCount >= 10) // Trigger win condition when bird count reaches 10
         {
             win.SetActive(true); // Show win screen
             Time.timeScale = 0; // Pause the game
+             if(uiController.sessionSubscribers < 0)
+        {
+            subscriberGainedText.text = $" {uiController.sessionSubscribers}";
+        }
+         else
+        {
+            subscriberGainedText.text = $" + {uiController.sessionSubscribers}";
+        }
            
             // Display the session subscribers on the win screen
-            subscriberGainedText.text = $"+ {uiController.sessionSubscribers}";
+            
             subscriberText.text = $"Subscribers: {uiController.subscriber}"; // Show the actual subscriber count
         }
     }

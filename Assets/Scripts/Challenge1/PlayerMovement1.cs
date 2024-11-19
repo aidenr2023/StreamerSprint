@@ -313,7 +313,7 @@ public class PlayerMovement1 : MonoBehaviour
         StartCoroutine(HideObstacleText());
         obstacleText.gameObject.SetActive(true);
         audioManager.PlaySFX(audioManager.obstacleHit);
-        uiController.LoseSubscribers(1);
+        
     }
 
     IEnumerator HideObstacleText()

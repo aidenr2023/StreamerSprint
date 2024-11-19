@@ -107,9 +107,16 @@ public class UIController1 : MonoBehaviour
     void Lose()
     {  
         lose.SetActive(true);
-        subscriberGainedText.text = $"+ {sessionSubscribers}";
         player.SetControlsEnabled(false);
         Time.timeScale = 0;
+         if(sessionSubscribers < 0)
+        {
+            subscriberGainedText.text = $" {sessionSubscribers}";
+        }
+         else
+        {
+            subscriberGainedText.text = $" + {sessionSubscribers}";
+        }
     }
 
     // New method to unlock features in the specified scene
