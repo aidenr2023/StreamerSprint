@@ -157,7 +157,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -38}
-  m_SizeDelta: {x: 520.6127, y: 152.4424}
+  m_SizeDelta: {x: 599.1029, y: 163.6553}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &36551424
 MonoBehaviour:
@@ -184,8 +184,8 @@ MonoBehaviour:
 
     Swipe Left/Right/Up/Down = Trick'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db10ccf717ccbb7488982b9a0c8ddaac, type: 2}
+  m_sharedMaterial: {fileID: -2344353331981900752, guid: db10ccf717ccbb7488982b9a0c8ddaac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -393,8 +393,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: How To Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db10ccf717ccbb7488982b9a0c8ddaac, type: 2}
+  m_sharedMaterial: {fileID: -2344353331981900752, guid: db10ccf717ccbb7488982b9a0c8ddaac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2839,8 +2839,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Volume
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: db10ccf717ccbb7488982b9a0c8ddaac, type: 2}
+  m_sharedMaterial: {fileID: -2344353331981900752, guid: db10ccf717ccbb7488982b9a0c8ddaac, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

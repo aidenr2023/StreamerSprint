@@ -19,7 +19,7 @@ public class IntroText : MonoBehaviour
         introText.gameObject.SetActive(true);
 
         // Pause the game by setting time scale to 0
-        Time.timeScale = 0;
+      
 
         // Wait for the specified time duration
         yield return new WaitForSecondsRealtime(textDuration);  // Wait without being affected by time scale
