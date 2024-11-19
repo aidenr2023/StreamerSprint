@@ -337,7 +337,11 @@ public class PlayerMovement : MonoBehaviour
             isBubbleActive = true; // Set the flag
             StartCoroutine(TurnOffBubble());
         }
-        
+        else
+        {
+            Debug.Log("Bubble is already active. Button press ignored.");
+        }
+
     }
 
     IEnumerator HideObstacleText()
