@@ -331,9 +331,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void ActivateBubble()
     {
-        bubble.SetActive(true); // Ensure the bubble GameObject is active
-        isBubbleActive = true; // Set the flag
-        StartCoroutine(TurnOffBubble());
+        if (!isBubbleActive)
+        {
+            bubble.SetActive(true); // Ensure the bubble GameObject is active
+            isBubbleActive = true; // Set the flag
+            StartCoroutine(TurnOffBubble());
+        }
+        
     }
 
     IEnumerator HideObstacleText()
