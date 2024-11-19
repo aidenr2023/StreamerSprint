@@ -350,4 +350,9 @@ public class UIController : MonoBehaviour
         summary.SetActive(false);
         player.SetControlsEnabled(true); 
     }
+    public void AddSubscribersButton()
+{
+    GainSubscribers(50);
+    Debug.Log("Gained 50 subscribers!");
+}
 }
