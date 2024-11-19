@@ -56,6 +56,7 @@ public class UIController : MonoBehaviour
         UpdateMilestoneProgress();
         UpdateMilestoneImage();
         CheckMilestones();
+        LoadShownMilestones();
     }
 
     void Update()
@@ -222,57 +223,73 @@ public class UIController : MonoBehaviour
         highScoreText.text = $"HighScore: {PlayerPrefs.GetInt("HighScore", 0)} Views";
     }
 
-  
-
-void Summary()
-{
-    if (isMilestonePopupActive)
-        return; // Skip showing the summary while a milestone popup is active.
-
-    // Check each milestone and show it only if it hasn't been shown this session.
-    if (subscriber > 25 && !shownMilestones.Contains(25))
+    private void LoadShownMilestones()
     {
-        milestone1.SetActive(true);
-        shownMilestones.Add(25);
-        summary.SetActive(false); // Ensure summary is hidden during milestone popup.
-        isMilestonePopupActive = true;
-        return;
+        foreach (int milestone in milestoneThresholds)
+        {
+            if (PlayerPrefs.GetInt($"Milestone_{milestone}", 0) == 1)
+            {
+                shownMilestones.Add(milestone);
+            }
+        }
     }
 
-    if (subscriber > 50 && !shownMilestones.Contains(50))
+    void Summary()
     {
-        milestone2.SetActive(true);
-        shownMilestones.Add(50);
-        summary.SetActive(false);
-        isMilestonePopupActive = true;
-        return;
+        if (isMilestonePopupActive)
+            return; // Skip showing the summary while a milestone popup is active.
+
+        // Check each milestone and show it only if it hasn't been shown this session.
+        if (subscriber > 25 && !shownMilestones.Contains(25))
+        {
+            milestone1.SetActive(true);
+            shownMilestones.Add(25);
+            PlayerPrefs.SetInt("Milestone_25", 1); // Save milestone as shown
+            PlayerPrefs.Save();
+            summary.SetActive(false); // Ensure summary is hidden during milestone popup.
+            isMilestonePopupActive = true;
+            return;
+        }
+
+        if (subscriber > 50 && !shownMilestones.Contains(50))
+        {
+            milestone2.SetActive(true);
+            shownMilestones.Add(50);
+            PlayerPrefs.SetInt("Milestone_50", 1);
+            PlayerPrefs.Save();
+            summary.SetActive(false);
+            isMilestonePopupActive = true;
+            return;
+        }
+
+        if (subscriber > 150 && !shownMilestones.Contains(150))
+        {
+            milestone3.SetActive(true);
+            shownMilestones.Add(150);
+            PlayerPrefs.SetInt("Milestone_150", 1);
+            PlayerPrefs.Save();
+            summary.SetActive(false);
+            isMilestonePopupActive = true;
+            return;
+        }
+
+        if (subscriber > 300 && !shownMilestones.Contains(300))
+        {
+            milestone4.SetActive(true);
+            shownMilestones.Add(300);
+            PlayerPrefs.SetInt("Milestone_300", 1);
+            PlayerPrefs.Save();
+            summary.SetActive(false);
+            isMilestonePopupActive = true;
+            return;
+        }
+
+        summary.SetActive(true);
+        player.SetControlsEnabled(false);
     }
 
-    if (subscriber > 150 && !shownMilestones.Contains(150))
-    {
-        milestone3.SetActive(true);
-        shownMilestones.Add(150);
-        summary.SetActive(false);
-        isMilestonePopupActive = true;
-        return;
-    }
 
-    if (subscriber > 300 && !shownMilestones.Contains(300))
-    {
-        milestone4.SetActive(true);
-        shownMilestones.Add(300);
-        summary.SetActive(false);
-        isMilestonePopupActive = true;
-        return;
-    }
-
-  
-    summary.SetActive(true);
-    player.SetControlsEnabled(false);
-}
-
-
-public void DismissMilestonePopup()
+    public void DismissMilestonePopup()
 {
     isMilestonePopupActive = false;
 
