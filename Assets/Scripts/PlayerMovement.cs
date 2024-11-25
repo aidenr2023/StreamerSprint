@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public bool controlsEnabled = true; // New variable to manage controls
 
     public TextMeshProUGUI trickText;
-    public TextMeshProUGUI obstacleText;
+    public Image obstacleImage;
 
     public LayerMask groundLayerMask;
     public LayerMask obstacleLayerMask;
@@ -327,8 +327,8 @@ public class PlayerMovement : MonoBehaviour
         if (!isBubbleActive) // Check if the bubble is inactive
         {
             velocity.x *= 0.7f; // Reduce velocity
-            StartCoroutine(HideObstacleText());
-            obstacleText.gameObject.SetActive(true);
+            StartCoroutine(HideObstacleImage());
+            obstacleImage.gameObject.SetActive(true);
             audioManager.PlaySFX(audioManager.obstacleHit);
             uiController.LoseSubscribers(1); // Lose subscribers
         }
@@ -367,10 +367,10 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Bubble cooldown ended. Button is ready.");
     }
 
-    IEnumerator HideObstacleText()
+    IEnumerator HideObstacleImage()
     {
         yield return new WaitForSeconds(.5f);
-        obstacleText.gameObject.SetActive(false);
+        obstacleImage.gameObject.SetActive(false);
     }
 
     IEnumerator TurnOffBubble()
