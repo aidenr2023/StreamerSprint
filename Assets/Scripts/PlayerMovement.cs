@@ -176,28 +176,28 @@ public class PlayerMovement : MonoBehaviour
                 {
                     PerformTrick("+1", "D");
                     anim.SetTrigger("Trick2");
-                    audioManager.PlaySFX(audioManager.Trick);
+                    
                 }
 
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     PerformTrick("+1", "A");
                     anim.SetTrigger("Trick2");
-                    audioManager.PlaySFX(audioManager.Trick);
+                    
                 }
 
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     PerformTrick("+1", "W");
                     anim.SetTrigger("Trick");
-                    audioManager.PlaySFX(audioManager.Trick);
+                    
                 }
 
                 if (Input.GetKeyDown(KeyCode.S))
                 {
                     PerformTrick("+1", "S");
                     anim.SetTrigger("Trick");
-                    audioManager.PlaySFX(audioManager.Trick);
+                    
                 }
             }
 
@@ -223,7 +223,16 @@ public class PlayerMovement : MonoBehaviour
         trickText.gameObject.SetActive(true);
         trickText.text = trickName;
         uiController.GainSubscribers(1); // Gain subscribers for tricks
+        audioManager.PlaySFX(audioManager.Trick);
         Debug.Log($"{trickName} Performed - Simulating {key} key press");
+
+        StartCoroutine(HideTrickTextAfterDelay());
+    }
+
+    private IEnumerator HideTrickTextAfterDelay()
+    {
+        yield return new WaitForSeconds(0.2f); // Adjust the delay duration as needed
+        trickText.gameObject.SetActive(false);
     }
 
     // Increment the player's position every frame and also adjust the difference between frames
