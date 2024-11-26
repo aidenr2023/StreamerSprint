@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     public Button bubbleButton;
     public GameObject bubbleButtonGO;
 
+    private float touchStartTime;
+
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0.4f;
     public float maxFRHoldTime = 0.4f;
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
     private float minSwipeDistance = 50f;
+    private float maxTapTime = 0.2f; // Max time allowed for a tap
 
     // Start is called before the first frame update
     void Start()
@@ -61,37 +64,44 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (uiController.canUseBubble)
         {
             bubbleButtonGO.SetActive(true);
         }
+
         // Only process input if controls are enabled
         if (!controlsEnabled) return;
 
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
 
+        // Touch input for mobile
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            // Handle jump on tap immediately
             if (touch.phase == TouchPhase.Began)
             {
-                if (isGrounded)
+                touchStartTime = Time.time;
+                touchStartPos = touch.position; // Record starting position of the touch
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                float touchDuration = Time.time - touchStartTime; // Calculate touch duration
+                Vector2 touchEndPos = touch.position; // Record ending position of the touch
+                Vector2 swipeDirection = touchEndPos - touchStartPos; // Calculate swipe direction
+                float swipeDistance = swipeDirection.magnitude;
+
+                // Handle as a tap if it's quick and has minimal movement
+                if (touchDuration < maxTapTime && swipeDistance < minSwipeDistance)
                 {
-                    Jump();  // Trigger the jump as soon as touch starts
+                    HandleTap(); // Process the tap action
                 }
                 else
                 {
-                    touchStartPos = touch.position;  // Store for potential trick detection if in-air
+                    // Otherwise, handle as a swipe
+                    HandleSwipe(touchStartPos, touchEndPos);
                 }
-            }
-            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Ended)
-            {
-                touchEndPos = touch.position;
-                HandleTouch(touchStartPos, touchEndPos);  // Handle trick input on swipe
             }
         }
 
@@ -101,7 +111,6 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Jump();
-                
             }
         }
 
@@ -111,6 +120,50 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HandleTrickInput();
+    }
+
+    private void HandleTap()
+    {
+        if (isGrounded)
+        {
+            Jump(); // Trigger jump on a valid tap
+        }
+    }
+
+    private void HandleSwipe(Vector2 start, Vector2 end)
+    {
+        Vector2 swipeDirection = end - start;
+        float swipeDistance = swipeDirection.magnitude;
+
+        // Prevent further processing if the swipe distance is below the threshold
+        if (swipeDistance < minSwipeDistance) return;
+
+        // Swipe logic (only when airborne and tricks are allowed)
+        if (!isGrounded && uiController != null && uiController.canDoTricks)
+        {
+            swipeDirection.Normalize(); // Normalize the swipe direction
+
+            if (Vector2.Dot(swipeDirection, Vector2.up) > 0.7f)
+            {
+                PerformTrick("+1", "W");
+                anim.SetTrigger("Trick");
+            }
+            else if (Vector2.Dot(swipeDirection, Vector2.down) > 0.7f)
+            {
+                PerformTrick("+1", "S");
+                anim.SetTrigger("Trick");
+            }
+            else if (Vector2.Dot(swipeDirection, Vector2.left) > 0.7f)
+            {
+                PerformTrick("+1", "A");
+                anim.SetTrigger("Trick2");
+            }
+            else if (Vector2.Dot(swipeDirection, Vector2.right) > 0.7f)
+            {
+                PerformTrick("+1", "D");
+                anim.SetTrigger("Trick2");
+            }
+        }
     }
 
     private void HandleTrickInput()
@@ -163,47 +216,6 @@ public class PlayerMovement : MonoBehaviour
         isHoldingJump = true;
         holdJumpTimer = 0;
         audioManager.PlaySFX(audioManager.Jump);
-    }
-
-    private void HandleTouch(Vector2 start, Vector2 end)
-    {
-        Vector2 swipeDirection = end - start;
-        float swipeDistance = swipeDirection.magnitude;
-
-        if (swipeDistance < minSwipeDistance)
-        {
-            // It's a tap, so trigger a jump
-            if (isGrounded)
-            {
-                Jump();
-            }
-        }
-        else if (!isGrounded && uiController != null && uiController.canDoTricks)
-        {
-            // It's a swipe, determine direction
-            swipeDirection.Normalize();  // Normalize to get just the direction
-
-            if (Vector2.Dot(swipeDirection, Vector2.up) > 0.7f)
-            {
-                PerformTrick("+1", "W");
-                anim.SetTrigger("Trick");
-            }
-            else if (Vector2.Dot(swipeDirection, Vector2.down) > 0.7f)
-            {
-                PerformTrick("+1", "S");
-                anim.SetTrigger("Trick");
-            }
-            else if (Vector2.Dot(swipeDirection, Vector2.left) > 0.7f)
-            {
-                PerformTrick("+1", "A");
-                anim.SetTrigger("Trick2");
-            }
-            else if (Vector2.Dot(swipeDirection, Vector2.right) > 0.7f)
-            {
-                PerformTrick("+1", "D");
-                anim.SetTrigger("Trick2");
-            }
-        }
     }
 
     private void PerformTrick(string trickName, string key)
