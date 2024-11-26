@@ -290,7 +290,7 @@ public class UIController : MonoBehaviour
         {
             milestone2.SetActive(true);
             shownMilestones.Add(300);
-            PlayerPrefs.SetInt("Milestone_300", 1);
+            PlayerPrefs.SetInt("Milestone_200", 1);
             PlayerPrefs.Save();
             summary.SetActive(false);
             isMilestonePopupActive = true;
@@ -301,7 +301,7 @@ public class UIController : MonoBehaviour
         {
             milestone5.SetActive(true);
             shownMilestones.Add(300);
-            PlayerPrefs.SetInt("Milestone_300", 1);
+            PlayerPrefs.SetInt("Milestone_350", 1);
             PlayerPrefs.Save();
             summary.SetActive(false);
             isMilestonePopupActive = true;
@@ -312,7 +312,7 @@ public class UIController : MonoBehaviour
         {
             milestone3.SetActive(true);
             shownMilestones.Add(300);
-            PlayerPrefs.SetInt("Milestone_300", 1);
+            PlayerPrefs.SetInt("Milestone_500", 1);
             PlayerPrefs.Save();
             summary.SetActive(false);
             isMilestonePopupActive = true;
